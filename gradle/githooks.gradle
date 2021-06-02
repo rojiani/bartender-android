@@ -1,0 +1,24 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+
+apply plugin: 'com.star-zero.gradle.githook'
+
+githook {
+    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+        gradleCommand = file(new File(rootDir, "gradlew.bat"))
+    } else {
+        gradleCommand = file(new File(rootDir, "./gradlew"))
+    }
+    hooksDir = file(new File(rootDir, ".git/hooks"))
+    failOnMissingHooksDir = false
+    createHooksDirIfNotExist = false
+    hooks {
+        "pre-commit" {
+            shell = "echo 'Running pre-commit hook...'"
+            task = "spotlessApply"
+        }
+        "pre-push" {
+            shell = "echo 'Running pre-push hook...'"
+            task = "spotlessCheck detekt"
+        }
+    }
+}
