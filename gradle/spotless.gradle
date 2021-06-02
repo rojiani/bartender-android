@@ -1,0 +1,47 @@
+/**************************************************************************************************
+ * Spotless Plugin:
+ * https://github.com/diffplug/spotless
+ * https://github.com/diffplug/spotless/tree/master/plugin-gradle
+ **************************************************************************************************/
+
+apply plugin: 'com.diffplug.spotless'
+apply plugin: 'groovy'
+
+spotless {
+    groovyGradle {
+        target fileTree(rootDir) {
+            include "**/*.gradle"
+        }
+        greclipse()
+        indentWithSpaces()
+    }
+
+    java {
+        target fileTree(rootDir) {
+            include '**/*.java'
+            exclude "**/build/*"
+        }
+
+        googleJavaFormat().aosp()
+    }
+
+    kotlin {
+        target fileTree(rootDir) {
+            include '**/*.kt'
+            exclude '**/build/*'
+        }
+
+        ktlint(rootProject.ktlint_version)
+                .userData([
+                    'max_line_length'     : '150',
+                    'indent_style'        : 'space',
+                    'insert_final_newline': 'true',
+                    'experimental:indent' : 'false',
+                    'disabled_rules'      : 'no-multi-spaces, no-wildcard-imports'
+                ])
+
+        endWithNewline()
+        indentWithSpaces()
+        trimTrailingWhitespace()
+    }
+}

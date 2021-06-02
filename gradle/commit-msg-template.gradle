@@ -1,0 +1,19 @@
+tasks.register("installCommitTemplate") {
+    description = "Sets the local git config's commit.template property to ${rootDir}/config/.commit-msg"
+    group = "Build Setup"
+
+    exec {
+        commandLine = [
+            "git",
+            "config",
+            "--local",
+            "commit.template",
+            "${rootDir}/config/.commit-msg"
+        ]
+    }
+}
+
+// Install (or update) the git commit message template automatically
+afterEvaluate {
+    installCommitTemplate
+}
