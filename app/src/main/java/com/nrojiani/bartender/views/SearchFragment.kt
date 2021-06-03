@@ -1,7 +1,6 @@
 package com.nrojiani.bartender.views
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +17,7 @@ import com.nrojiani.bartender.databinding.SearchFragmentBinding
 import com.nrojiani.bartender.viewmodels.SearchViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class SearchFragment : Fragment() {
 
@@ -53,7 +53,7 @@ class SearchFragment : Fragment() {
                     minActiveState = Lifecycle.State.STARTED
                 )
                 .collect { event ->
-                    Log.d("SearchFragment", "event: $event")
+                    Timber.d("Received event: $event")
                     when (event) {
                         is SearchViewModel.Event.NavigateToCocktailDetail -> {
                             val action: NavDirections = SearchFragmentDirections

@@ -1,12 +1,12 @@
 package com.nrojiani.bartender.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class SearchViewModel : ViewModel() {
 
@@ -28,7 +28,7 @@ class SearchViewModel : ViewModel() {
 
     fun displayCocktailDetails(cocktailName: String) {
         viewModelScope.launch {
-            Log.d("SearchViewModel", "sending event") // TODO
+            Timber.d("sending event")
             eventChannel.send(Event.NavigateToCocktailDetail(cocktailName))
         }
     }
