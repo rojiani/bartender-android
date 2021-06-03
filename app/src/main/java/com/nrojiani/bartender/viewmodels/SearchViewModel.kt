@@ -8,6 +8,8 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
+@Suppress("ForbiddenComment")
+// TODO: add @HiltViewModel - @Inject constructor(searchRepository) when repository added
 class SearchViewModel : ViewModel() {
 
     sealed class Event {

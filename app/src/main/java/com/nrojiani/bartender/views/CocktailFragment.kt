@@ -10,14 +10,12 @@ import androidx.fragment.app.viewModels
 import com.nrojiani.bartender.R
 import com.nrojiani.bartender.databinding.CocktailFragmentBinding
 import com.nrojiani.bartender.viewmodels.CocktailViewModel
-import com.nrojiani.bartender.viewmodels.CocktailViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class CocktailFragment : Fragment() {
 
-    private val viewModel by viewModels<CocktailViewModel> {
-        val cocktailName = CocktailFragmentArgs.fromBundle(requireArguments()).cocktailName
-        CocktailViewModelFactory(cocktailName)
-    }
+    private val viewModel by viewModels<CocktailViewModel>()
 
     private lateinit var binding: CocktailFragmentBinding
 

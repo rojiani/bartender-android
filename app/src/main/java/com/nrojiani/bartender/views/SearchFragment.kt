@@ -15,10 +15,12 @@ import androidx.navigation.fragment.findNavController
 import com.nrojiani.bartender.R
 import com.nrojiani.bartender.databinding.SearchFragmentBinding
 import com.nrojiani.bartender.viewmodels.SearchViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
+@AndroidEntryPoint
 class SearchFragment : Fragment() {
 
     private val viewModel by viewModels<SearchViewModel>()
