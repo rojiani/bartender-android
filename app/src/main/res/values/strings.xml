@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Bartender</string>
+    <string name="placeholder_search_fragment">Placeholder: Search Fragment</string>
+    <string name="placeholder_mojito_button_text">Mojito</string>
 </resources>
