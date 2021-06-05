@@ -117,6 +117,9 @@ tasks.create(name: "jacocoTestCoverageVerification", type: JacocoCoverageVerific
     executionData.from = mergedUnitTestExecutionData
 
     violationRules {
+        // No longer accurately collecting coverage data...
+        // possibly related to changes with Android Gradle Plugin >= 4.2.0 ?
+        enabled = false
         rule {
             limit {
                 counter = 'LINE'
