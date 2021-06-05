@@ -1,9 +1,9 @@
 package com.nrojiani.bartender.data.domain
 
 /**
- * Domain model for a cocktail with a recipe.
+ * Domain model for a cocktail with full details.
  */
-data class Cocktail(
+data class Drink(
     val id: String,
     val drinkName: String,
     val alternateDrinkName: String,
@@ -14,7 +14,13 @@ data class Cocktail(
     val glass: String,
     val instructions: String,
     val imageUrl: String,
-    val ingredients: List<Ingredient>,
+    val ingredientMeasures: List<IngredientMeasure>,
 )
 
-data class Ingredient(val ingredient: String, val measure: String)
+data class DrinkRef(
+    val id: String,
+    val drinkName: String,
+    val imageUrl: String,
+)
+
+data class IngredientMeasure(val ingredient: String, val measure: String)

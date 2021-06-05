@@ -111,6 +111,7 @@ dependencies {
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
+    implementation "com.google.guava:guava:$guava_version"
 
     testImplementation "junit:junit:$junit_version"
     testImplementation "androidx.test.ext:junit-ktx:$junit_test_ext_version"

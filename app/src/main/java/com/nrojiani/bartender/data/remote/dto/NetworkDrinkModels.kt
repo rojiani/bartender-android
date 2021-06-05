@@ -2,27 +2,28 @@
 
 package com.nrojiani.bartender.data.remote.dto
 
-import com.nrojiani.bartender.data.domain.Cocktail
+import com.nrojiani.bartender.data.domain.Drink
+import com.nrojiani.bartender.data.domain.DrinkRef
 import com.nrojiani.bartender.data.mapper.categorizeIba
-import com.nrojiani.bartender.data.mapper.ingredients
+import com.nrojiani.bartender.data.mapper.ingredientMeasures
 import com.nrojiani.bartender.data.mapper.parseTags
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 /**
- * Data Transfer Object (DTO) for Search result:
+ * Data Transfer Object (DTO) for search by cocktail name result:
  * `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${drink name}`
  */
 @JsonClass(generateAdapter = true)
-data class NetworkCocktailSearchResults(
-    val drinks: List<NetworkCocktail>?
+data class NetworkDrinksContainer(
+    val drinks: List<NetworkDrink>?
 )
 
 /**
  * DTO for a single cocktail.
  */
 @JsonClass(generateAdapter = true)
-data class NetworkCocktail(
+data class NetworkDrink(
 
     @Json(name = "idDrink")
     val id: String,
@@ -148,8 +149,8 @@ data class NetworkCocktail(
     val measure15: String?,
 )
 
-fun NetworkCocktail.toDomainModel(): Cocktail =
-    Cocktail(
+fun NetworkDrink.toDomainModel(): Drink =
+    Drink(
         id = id,
         drinkName = drinkName,
         alternateDrinkName = alternateDrinkName.orEmpty(),
@@ -160,8 +161,37 @@ fun NetworkCocktail.toDomainModel(): Cocktail =
         glass = glass.orEmpty(),
         instructions = instructions.orEmpty(),
         imageUrl = imageUrl.orEmpty(),
-        ingredients = ingredients
+        ingredientMeasures = ingredientMeasures
     )
 
-fun NetworkCocktailSearchResults.toDomainModel(): List<Cocktail> =
+fun NetworkDrinksContainer.toDomainModel(): List<Drink> =
+    drinks?.map { it.toDomainModel() } ?: emptyList()
+
+/**
+ * Results for filter endpoints.
+ */
+@JsonClass(generateAdapter = true)
+data class NetworkDrinkRefsContainer(
+    val drinks: List<NetworkDrinkRef>?
+)
+
+data class NetworkDrinkRef(
+    @Json(name = "idDrink")
+    val id: String,
+
+    @Json(name = "strDrink")
+    val drinkName: String,
+
+    @Json(name = "strDrinkThumb")
+    val imageUrl: String?,
+)
+
+fun NetworkDrinkRef.toDomainModel(): DrinkRef =
+    DrinkRef(
+        id = id,
+        drinkName = drinkName,
+        imageUrl = imageUrl.orEmpty(),
+    )
+
+fun NetworkDrinkRefsContainer.toDomainModel(): List<DrinkRef> =
     drinks?.map { it.toDomainModel() } ?: emptyList()
