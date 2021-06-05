@@ -23,3 +23,8 @@ internal fun readMockSearchByDrinkNameJson(mockFilename: String): String =
     NETWORK_SEARCH_BY_NAME_MOCKS_PATH.resolve(mockFilename)
         .readText()
         .also { Timber.d("json: \n$it") }
+
+internal fun readMockSearchByIngredientsJson(mockFilename: String): String =
+    NETWORK_SEARCH_BY_NAME_MOCKS_PATH.resolve(mockFilename)
+        .readText()
+        .also { Timber.d("json: \n$it") }
