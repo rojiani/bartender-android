@@ -53,6 +53,12 @@ android {
         exclude 'META-INF/fragment-testing_release.kotlin_module'
     }
 
+    lintOptions {
+        // Throws NullPointerException while linting...
+        // no DialogFragments are used in this project
+        disable "DialogFragmentCallbacksDetector"
+    }
+
     testOptions {
         unitTests {
             includeAndroidResources = true
@@ -142,3 +148,5 @@ dependencies {
     androidTestImplementation "com.google.dagger:hilt-android-testing:$hilt_version"
     kaptAndroidTest "com.google.dagger:hilt-android-compiler:$hilt_version"
 }
+
+apply from: "${gradleScriptsDir}/jacoco-android-app.gradle"
