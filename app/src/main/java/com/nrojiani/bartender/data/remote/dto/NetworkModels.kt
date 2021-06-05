@@ -15,7 +15,7 @@ import com.squareup.moshi.JsonClass
  */
 @JsonClass(generateAdapter = true)
 data class NetworkCocktailSearchResults(
-    val drinks: List<NetworkCocktail>
+    val drinks: List<NetworkCocktail>?
 )
 
 /**
@@ -164,4 +164,4 @@ fun NetworkCocktail.toDomainModel(): Cocktail =
     )
 
 fun NetworkCocktailSearchResults.toDomainModel(): List<Cocktail> =
-    drinks.map { it.toDomainModel() }
+    drinks?.map { it.toDomainModel() } ?: emptyList()

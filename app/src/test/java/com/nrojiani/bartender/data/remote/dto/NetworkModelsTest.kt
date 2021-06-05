@@ -8,6 +8,7 @@ import com.nrojiani.bartender.data.test.utils.readMockSearchByDrinkNameJson
 import com.nrojiani.bartender.di.NetworkModule
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
+import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
@@ -64,10 +65,10 @@ class NetworkModelsTest {
         val networkCocktailResults = adapter.fromJson(networkCocktailResultsJson)
 
         networkCocktailResults.shouldNotBeNull()
-        networkCocktailResults.drinks.shouldHaveSize(1)
-        val networkGinAndTonic = networkCocktailResults.drinks.first()
-        val ginAndTonic = networkGinAndTonic.toDomainModel()
-        ginAndTonic
+        networkCocktailResults.drinks?.shouldHaveSize(1)
+        val networkGinAndTonic = networkCocktailResults.drinks?.first()
+        val ginAndTonic = networkGinAndTonic?.toDomainModel()
+        ginAndTonic.shouldNotBeNull()
             .apply {
                 id.shouldBe("11403")
                 drinkName.shouldBe("Gin And Tonic")
@@ -88,6 +89,22 @@ class NetworkModelsTest {
                     )
                 )
             }
+    }
+
+    @Test
+    fun no_search_matches() {
+        val adapter: JsonAdapter<NetworkCocktailSearchResults> =
+            moshi.adapter(NetworkCocktailSearchResults::class.java)
+        val networkNoDrinksJson = readMockSearchByDrinkNameJson("no-matches.json")
+        val networkCocktailResults = adapter.fromJson(networkNoDrinksJson)
+
+        networkCocktailResults.shouldNotBeNull()
+        networkCocktailResults.drinks?.shouldBeEmpty()
+
+        val cocktails = networkCocktailResults.toDomainModel()
+        cocktails
+            .shouldNotBeNull()
+            .shouldBeEmpty()
     }
 
     companion object {
