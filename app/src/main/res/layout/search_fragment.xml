@@ -38,5 +38,44 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/search_fragment_placeholder_text" />
 
+        <TextView
+            android:id="@+id/tempFetchDataTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_margin"
+            android:text="Search for a Drink"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/temporary_mojito_button" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/searchDrinkByNameTextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/double_margin"
+            android:layout_marginTop="@dimen/default_margin"
+            android:layout_marginEnd="@dimen/double_margin"
+            android:hint="@string/drink_name_search_hint"
+            app:endIconMode="clear_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tempFetchDataTitle">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/searchDrinkByNameTextInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onTextChanged="@{(s, start, before, count) -> searchViewModel.drinkNameTextChanged(s)}"
+                tools:text="gin and tonic" />
+
+            <Button
+                android:id="@+id/search_by_drink_name_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="@{() -> searchViewModel.getDrinksWithName(searchViewModel.drinkNameText)}"
+                android:text="@string/search_button_label" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

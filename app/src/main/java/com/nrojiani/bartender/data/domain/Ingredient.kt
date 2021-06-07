@@ -1,7 +1,7 @@
 package com.nrojiani.bartender.data.domain
 
 import com.google.common.net.UrlEscapers
-import com.nrojiani.bartender.data.remote.CocktailApiConstants
+import com.nrojiani.bartender.data.remote.webservice.TheCocktailDbApi
 
 data class Ingredient(
     val id: String,
@@ -18,12 +18,6 @@ data class Ingredient(
             ImageSize.MEDIUM -> "$encodedIngredientName-medium.png"
             ImageSize.LARGE -> "$encodedIngredientName.png"
         }
-        return "${CocktailApiConstants.INGREDIENT_IMAGES_BASE_URL}/$imageName"
+        return "${TheCocktailDbApi.INGREDIENT_IMAGES_BASE_URL}/$imageName"
     }
-}
-
-enum class ImageSize {
-    SMALL,
-    MEDIUM,
-    LARGE
 }

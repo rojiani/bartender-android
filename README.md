@@ -20,6 +20,23 @@ An Android app for finding cocktail recipes.
 * [Moshi](https://github.com/square/moshi) for JSON 
 * [Glide](https://bumptech.github.io/glide/) - image loading/caching
 * [mockk](https://mockk.io/), [kotest](https://kotest.io/docs/assertions/assertions.html)
+* Code Quality tools:
+    * Static analysis:
+        * [Detekt](https://detekt.github.io/detekt/) 
+        * [Android Lint](https://developer.android.com/studio/write/lint)
+    * Auto-formatting:
+        * [Spotless](https://github.com/diffplug/spotless) with [ktlint](https://ktlint.github.io/) 
+        for Kotlin code. Also formats Gradle scripts.
+    * Git hooks:
+        * pre-commit hook will run spotlessApply to format the code
+        * pre-push hook will run detekt & spotlessCheck to catch static analysis or formatting issues
+        before you push & they fail on CI
+    * JaCoCo:
+        * Currently disabled - not detecting all Kotlin source classes
+* Uses some Domain-Driven Design (DDD) concepts to decouple network, database, & domain 
+    layers. Why? Check out this great [Medium article](https://proandroiddev.com/the-real-repository-pattern-in-android-efba8662b754) 
+    on DDD and the Repository pattern in Android.
+
 
 ### TheCocktailDB API
 
