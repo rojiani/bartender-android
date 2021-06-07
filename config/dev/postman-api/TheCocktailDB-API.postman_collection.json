@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "ba09af5b-cfc2-4f13-8851-a009d5201861",
+		"_postman_id": "63b2281d-ce7e-4022-80b0-347cf61433c2",
 		"name": "TheCocktailDB API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -151,7 +151,7 @@
 			"response": []
 		},
 		{
-			"name": "Search by Ingredient Name (gin)",
+			"name": "Search Ingredient by Name (gin)",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -173,6 +173,93 @@
 						{
 							"key": "i",
 							"value": "gin"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search Ingredient by Name (vodka)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "www.thecocktaildb.com/api/json/v1/1/search.php?i=vodka",
+					"host": [
+						"www",
+						"thecocktaildb",
+						"com"
+					],
+					"path": [
+						"api",
+						"json",
+						"v1",
+						"1",
+						"search.php"
+					],
+					"query": [
+						{
+							"key": "i",
+							"value": "vodka"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search Ingredient by Name (sugar)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "www.thecocktaildb.com/api/json/v1/1/search.php?i=sugar",
+					"host": [
+						"www",
+						"thecocktaildb",
+						"com"
+					],
+					"path": [
+						"api",
+						"json",
+						"v1",
+						"1",
+						"search.php"
+					],
+					"query": [
+						{
+							"key": "i",
+							"value": "sugar"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search Ingredient by Name (not found)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "www.thecocktaildb.com/api/json/v1/1/search.php?i=asdf",
+					"host": [
+						"www",
+						"thecocktaildb",
+						"com"
+					],
+					"path": [
+						"api",
+						"json",
+						"v1",
+						"1",
+						"search.php"
+					],
+					"query": [
+						{
+							"key": "i",
+							"value": "asdf"
 						}
 					]
 				}
@@ -210,7 +297,7 @@
 			"response": []
 		},
 		{
-			"name": "Ingredient by ID",
+			"name": "Ingredient by ID (Elderflower cordial)",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -232,6 +319,64 @@
 						{
 							"key": "iid",
 							"value": "552"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ingredient by ID (Sugar)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "www.thecocktaildb.com/api/json/v1/1/lookup.php?iid=476",
+					"host": [
+						"www",
+						"thecocktaildb",
+						"com"
+					],
+					"path": [
+						"api",
+						"json",
+						"v1",
+						"1",
+						"lookup.php"
+					],
+					"query": [
+						{
+							"key": "iid",
+							"value": "476"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ingredient by ID (Gin)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "www.thecocktaildb.com/api/json/v1/1/lookup.php?iid=2",
+					"host": [
+						"www",
+						"thecocktaildb",
+						"com"
+					],
+					"path": [
+						"api",
+						"json",
+						"v1",
+						"1",
+						"lookup.php"
+					],
+					"query": [
+						{
+							"key": "iid",
+							"value": "2"
 						}
 					]
 				}
@@ -343,6 +488,35 @@
 						{
 							"key": "a",
 							"value": "Non_Alcoholic"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Filter by Optional Alcohol",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "www.thecocktaildb.com/api/json/v1/1/filter.php?a=Optional Alcohol",
+					"host": [
+						"www",
+						"thecocktaildb",
+						"com"
+					],
+					"path": [
+						"api",
+						"json",
+						"v1",
+						"1",
+						"filter.php"
+					],
+					"query": [
+						{
+							"key": "a",
+							"value": "Optional Alcohol"
 						}
 					]
 				}

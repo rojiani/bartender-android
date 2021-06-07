@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">Bartender</string>
-    <string name="placeholder_search_fragment">Placeholder: Search Fragment</string>
-    <string name="placeholder_mojito_button_text">Mojito</string>
+    <string name="placeholder_search_fragment">Temporary UI for Search Fragment</string>
+    <string name="placeholder_mojito_button_text">Show Mojito Details</string>
+    <string name="drink_name_search_hint">Drink Name</string>
+    <string name="search_button_label">Search</string>
+    <string name="drink_first_letter_search_hint">First Letter</string>
+    <string name="get_random_drink_button_label">Get Random Drink</string>
 </resources>

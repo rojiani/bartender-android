@@ -6,6 +6,24 @@
 formatting:
   active: false
 
+complexity:
+  TooManyFunctions:
+    active: true
+    excludes: ['**/test/**', '**/sharedTest/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
+    # Default: 11
+    thresholdInFiles: 14
+    # Default: 11
+    thresholdInClasses: 12
+    # Default: 11
+    thresholdInInterfaces: 12
+    # Default: 11
+    thresholdInObjects: 14
+    # Default: 11
+    thresholdInEnums: 12
+    ignoreDeprecated: false
+    ignorePrivate: false
+    ignoreOverridden: false
+
 style:
   active: true
   MagicNumber:

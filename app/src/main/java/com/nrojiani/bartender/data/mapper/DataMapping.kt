@@ -1,3 +1,5 @@
+@file:JvmName("DataMapping")
+
 package com.nrojiani.bartender.data.mapper
 
 import com.nrojiani.bartender.data.domain.IbaCategory

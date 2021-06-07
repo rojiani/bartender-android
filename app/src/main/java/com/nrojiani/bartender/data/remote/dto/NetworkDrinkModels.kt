@@ -1,4 +1,4 @@
-@file:JvmName("NetworkModels")
+@file:JvmName("NetworkDrinkModels")
 
 package com.nrojiani.bartender.data.remote.dto
 

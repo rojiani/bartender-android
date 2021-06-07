@@ -1,3 +1,4 @@
+@file:JvmName("NetworkIngredientModels")
 package com.nrojiani.bartender.data.remote.dto
 
 import com.nrojiani.bartender.data.domain.Ingredient

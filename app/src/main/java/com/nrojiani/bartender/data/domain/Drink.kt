@@ -16,11 +16,3 @@ data class Drink(
     val imageUrl: String,
     val ingredientMeasures: List<IngredientMeasure>,
 )
-
-data class DrinkRef(
-    val id: String,
-    val drinkName: String,
-    val imageUrl: String,
-)
-
-data class IngredientMeasure(val ingredient: String, val measure: String)

@@ -42,8 +42,26 @@ class SearchFragment : Fragment() {
         }
 
         consumeEvents()
+        observeViewModel()
 
         return binding.root
+    }
+
+    private fun observeViewModel() {
+        viewModel.apply {
+
+            drinkNameText.observe(viewLifecycleOwner) {
+                Timber.d("[drinkNameText]: $it")
+            }
+
+            drinkNameSearchResults.observe(viewLifecycleOwner) { matches ->
+                Timber.d("[drinkNameSearchResults]: $matches")
+            }
+
+            drinkFirstLetterSearchResults.observe(viewLifecycleOwner) { matches ->
+                Timber.d("[drinkFirstCharSearchResults]: $matches")
+            }
+        }
     }
 
     private fun consumeEvents() {
