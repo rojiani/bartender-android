@@ -13,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import com.nrojiani.bartender.R
+import com.nrojiani.bartender.data.domain.DrinkRef
 import com.nrojiani.bartender.databinding.SearchFragmentBinding
 import com.nrojiani.bartender.viewmodels.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -38,7 +39,7 @@ class SearchFragment : Fragment() {
         binding.setLifecycleOwner { this.lifecycle }
 
         binding.temporaryMojitoButton.setOnClickListener {
-            viewModel.displayCocktailDetails(PLACEHOLDER_COCKTAIL_NAME)
+            viewModel.displayDrinkDetails(PLACEHOLDER_DRINK_REF)
         }
 
         consumeEvents()
@@ -75,9 +76,9 @@ class SearchFragment : Fragment() {
                 .collect { event ->
                     Timber.d("Received event: $event")
                     when (event) {
-                        is SearchViewModel.Event.NavigateToCocktailDetail -> {
+                        is SearchViewModel.Event.NavigateToDrinkDetail -> {
                             val action: NavDirections = SearchFragmentDirections
-                                .actionSearchFragmentToCocktailFragment(event.cocktailName)
+                                .actionSearchFragmentToDrinkFragment(event.drinkRef)
                             findNavController().navigate(action)
                         }
                     }
@@ -90,6 +91,10 @@ class SearchFragment : Fragment() {
          * TODO: remove once replaced by cocktail search results.
          */
         @Suppress("ForbiddenComment")
-        private const val PLACEHOLDER_COCKTAIL_NAME = "Mojito"
+        private val PLACEHOLDER_DRINK_REF = DrinkRef(
+            id = "11000",
+            drinkName = "Mojito",
+            imageUrl = "https://www.thecocktaildb.com/images/media/drink/metwgh1606770327.jpg"
+        )
     }
 }
