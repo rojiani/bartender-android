@@ -34,6 +34,9 @@ buildscript {
         turbine_version = '0.5.2'
 
         // Gradle Plugins
+        // AGP 7.0.0 required for StateFlow databinding: https://developer.android.com/topic/libraries/data-binding/observability#stateflow
+        // Update once hilt-android-gradle-plugin is updated/stable
+        android_gradle_plugin_version = '4.2.1'
         dependency_analysis_version = '0.73.0'
         detekt_version = '1.17.1'
         githooks_version = '1.2.0'
@@ -51,7 +54,7 @@ buildscript {
     }
 
     dependencies {
-        classpath "com.android.tools.build:gradle:4.2.1"
+        classpath "com.android.tools.build:gradle:$android_gradle_plugin_version"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$detekt_version"
         classpath "com.diffplug.spotless:spotless-plugin-gradle:$spotless_version"

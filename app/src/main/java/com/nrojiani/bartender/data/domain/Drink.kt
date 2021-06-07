@@ -15,4 +15,10 @@ data class Drink(
     val instructions: String,
     val imageUrl: String,
     val ingredientMeasures: List<IngredientMeasure>,
-)
+) {
+    fun toDrinkRef(): DrinkRef = DrinkRef(
+        id = id,
+        drinkName = drinkName,
+        imageUrl = imageUrl
+    )
+}

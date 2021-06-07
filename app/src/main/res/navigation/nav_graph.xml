@@ -11,17 +11,17 @@
         android:label="search_fragment"
         tools:layout="@layout/search_fragment">
         <action
-            android:id="@+id/action_searchFragment_to_cocktailFragment"
-            app:destination="@id/cocktailFragment" />
+            android:id="@+id/action_searchFragment_to_drinkFragment"
+            app:destination="@id/drinkFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/cocktailFragment"
-        android:name="com.nrojiani.bartender.views.CocktailFragment"
-        android:label="cocktail_fragment"
-        tools:layout="@layout/cocktail_fragment">
+        android:id="@+id/drinkFragment"
+        android:name="com.nrojiani.bartender.views.DrinkFragment"
+        android:label="drink_fragment"
+        tools:layout="@layout/drink_fragment">
         <argument
-            android:name="cocktailName"
-            app:argType="string" />
+            android:name="drinkRef"
+            app:argType="com.nrojiani.bartender.data.domain.DrinkRef" />
     </fragment>
 </navigation>

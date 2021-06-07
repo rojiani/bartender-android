@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nrojiani.bartender.data.Resource
 import com.nrojiani.bartender.data.domain.Drink
+import com.nrojiani.bartender.data.domain.DrinkRef
 import com.nrojiani.bartender.data.repository.IDrinksRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -91,7 +92,7 @@ class SearchViewModel @Inject constructor(
     }
 
     sealed class Event {
-        data class NavigateToCocktailDetail(val cocktailName: String) : Event()
+        data class NavigateToDrinkDetail(val drinkRef: DrinkRef) : Event()
     }
 
     /**
@@ -106,10 +107,12 @@ class SearchViewModel @Inject constructor(
      */
     val eventsFlow: Flow<Event> = eventChannel.receiveAsFlow()
 
-    fun displayCocktailDetails(cocktailName: String) {
+    fun displayDrinkDetails(drinkRef: DrinkRef) {
         viewModelScope.launch {
-            Timber.d("sending event")
-            eventChannel.send(Event.NavigateToCocktailDetail(cocktailName))
+            Timber.d("sending NavigateToDrinkDetail($drinkRef) event")
+            eventChannel.send(Event.NavigateToDrinkDetail(drinkRef))
         }
     }
+
+    fun displayDrinkDetails(drink: Drink) = displayDrinkDetails(drink.toDrinkRef())
 }

@@ -39,7 +39,7 @@
             app:layout_constraintTop_toBottomOf="@id/search_fragment_placeholder_text" />
 
         <TextView
-            android:id="@+id/tempFetchDataTitle"
+            android:id="@+id/temp_fetch_data_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_margin"
@@ -49,7 +49,7 @@
             app:layout_constraintTop_toBottomOf="@+id/temporary_mojito_button" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/searchDrinkByNameTextInputLayout"
+            android:id="@+id/search_drink_by_name_text_input_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/double_margin"
@@ -59,10 +59,10 @@
             app:endIconMode="clear_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tempFetchDataTitle">
+            app:layout_constraintTop_toBottomOf="@+id/temp_fetch_data_title">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/searchDrinkByNameTextInput"
+                android:id="@+id/search_drink_by_name_text_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onTextChanged="@{(s, start, before, count) -> searchViewModel.drinkNameTextChanged(s)}"
