@@ -17,7 +17,7 @@ import org.junit.Test
 import retrofit2.Retrofit
 
 /**
- * Test Employees Retrofit Service using a Mock Web Server that returns
+ * Test TheCocktailDB Retrofit Service using a Mock Web Server that returns
  * JSON responses read from file.
  *
  * Adapted from:

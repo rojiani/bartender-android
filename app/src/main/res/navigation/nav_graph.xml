@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.nrojiani.bartender.views.SearchFragment"
+        android:name="com.nrojiani.bartender.views.search.SearchFragment"
         android:label="search_fragment"
         tools:layout="@layout/search_fragment">
         <action
@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/drinkFragment"
-        android:name="com.nrojiani.bartender.views.DrinkFragment"
+        android:name="com.nrojiani.bartender.views.drink.DrinkFragment"
         android:label="drink_fragment"
         tools:layout="@layout/drink_fragment">
         <argument

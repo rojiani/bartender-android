@@ -4,9 +4,10 @@ import androidx.lifecycle.*
 import com.nrojiani.bartender.data.Resource
 import com.nrojiani.bartender.data.domain.Drink
 import com.nrojiani.bartender.data.domain.DrinkRef
+import com.nrojiani.bartender.data.domain.IngredientMeasure
 import com.nrojiani.bartender.data.repository.IDrinksRepository
 import com.nrojiani.bartender.utils.viewmodel.navArgs
-import com.nrojiani.bartender.views.DrinkFragmentArgs
+import com.nrojiani.bartender.views.drink.DrinkFragmentArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -55,4 +56,23 @@ class DrinkViewModel @Inject constructor(
     )
 
     val drinkResource: LiveData<Resource<Drink>> = drinkFlow.asLiveData()
+
+    val ingredientMeasures: LiveData<List<IngredientMeasure>> = drinkResource.map {
+        when (it) {
+            is Resource.Success<Drink> -> it.data.ingredientMeasures
+            else -> emptyList()
+        }
+    }
+
+    val glass: LiveData<String> = drinkResource.map {
+        it.dataOrNull?.glass ?: ""
+    }
+
+    val instructions: LiveData<String> = drinkResource.map {
+        it.dataOrNull?.instructions ?: ""
+    }
+
+    fun displayIngredient(ingredientName: String) {
+        Timber.w("NOT YET IMPLEMENTED: displayIngredient($ingredientName) -> Navigate to Ingredient Detail")
+    }
 }

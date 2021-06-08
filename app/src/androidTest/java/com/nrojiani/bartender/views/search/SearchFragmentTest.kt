@@ -1,4 +1,4 @@
-package com.nrojiani.bartender.views
+package com.nrojiani.bartender.views.search
 
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
