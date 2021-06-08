@@ -25,7 +25,7 @@
             android:layout_width="@dimen/ingredient_icon_size"
             android:layout_height="@dimen/ingredient_icon_size"
             android:layout_margin="@dimen/default_margin"
-            app:ingredientIcon="@{ingredientMeasure}"
+            app:imageUrl="@{ingredientMeasure.iconUrl}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

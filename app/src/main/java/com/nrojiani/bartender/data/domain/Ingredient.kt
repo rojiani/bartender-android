@@ -11,13 +11,15 @@ data class Ingredient(
     val alcoholic: Boolean,
     val type: String,
 ) {
-    fun imageUrl(size: ImageSize): String {
-        val encodedIngredientName = UrlEscapers.urlFragmentEscaper().escape(name)
-        val imageName = when (size) {
-            ImageSize.SMALL -> "$encodedIngredientName-small.png"
-            ImageSize.MEDIUM -> "$encodedIngredientName-medium.png"
-            ImageSize.LARGE -> "$encodedIngredientName.png"
+    companion object {
+        fun imageUrl(ingredientName: String, size: ImageSize): String {
+            val encodedIngredientName = UrlEscapers.urlFragmentEscaper().escape(ingredientName)
+            val imageName = when (size) {
+                ImageSize.SMALL -> "$encodedIngredientName-small.png"
+                ImageSize.MEDIUM -> "$encodedIngredientName-medium.png"
+                ImageSize.LARGE -> "$encodedIngredientName.png"
+            }
+            return "${TheCocktailDbApi.INGREDIENT_IMAGES_BASE_URL}/$imageName"
         }
-        return "${TheCocktailDbApi.INGREDIENT_IMAGES_BASE_URL}/$imageName"
     }
 }

@@ -23,5 +23,17 @@
         <argument
             android:name="drinkRef"
             app:argType="com.nrojiani.bartender.data.domain.DrinkRef" />
+        <action
+            android:id="@+id/action_drinkFragment_to_ingredientFragment"
+            app:destination="@id/ingredientFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/ingredientFragment"
+        android:name="com.nrojiani.bartender.views.ingredient.IngredientFragment"
+        android:label="IngredientFragment" >
+        <argument
+            android:name="ingredientName"
+            app:argType="string" />
     </fragment>
 </navigation>
