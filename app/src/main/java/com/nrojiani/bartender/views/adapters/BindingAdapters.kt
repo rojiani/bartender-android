@@ -5,9 +5,11 @@ package com.nrojiani.bartender.views.adapters
 import android.view.View
 import android.widget.ImageView
 import androidx.core.net.toUri
+import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.nrojiani.bartender.R
 import com.nrojiani.bartender.data.Resource
 
@@ -30,4 +32,12 @@ fun <T> bindIsGone(view: View, resource: Resource<T>) {
     } else {
         View.GONE
     }
+}
+
+@BindingAdapter("loadingIndicator")
+fun <T> bindLoadingIndicator(
+    progressIndicator: LinearProgressIndicator,
+    resource: Resource<T>?
+) {
+    progressIndicator.isVisible = resource is Resource.Loading
 }

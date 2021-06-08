@@ -7,6 +7,7 @@
     <string name="drink_first_letter_search_hint">First Letter</string>
     <string name="get_random_drink_button_label">Get Random Drink</string>
     <string name="content_description_drink_image">drink image</string>
+    <string name="content_description_ingredient_image">ingredient image</string>
     <string name="instructions_title">Instructions</string>
     <string name="ingredients">Ingredients</string>
     <string name="ingredient_sample_text_lime">Lime</string>

@@ -9,10 +9,9 @@ import com.nrojiani.bartender.data.repository.IDrinksRepository
 import com.nrojiani.bartender.utils.viewmodel.navArgs
 import com.nrojiani.bartender.views.drink.DrinkFragmentArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -73,6 +72,25 @@ class DrinkViewModel @Inject constructor(
     }
 
     fun displayIngredient(ingredientName: String) {
-        Timber.w("NOT YET IMPLEMENTED: displayIngredient($ingredientName) -> Navigate to Ingredient Detail")
+        viewModelScope.launch {
+            Timber.d("sending NavigateToIngredientDetail($ingredientName) event")
+            eventChannel.send(Event.NavigateToIngredientDetail(ingredientName))
+        }
     }
+
+    sealed class Event {
+        data class NavigateToIngredientDetail(val ingredientName: String) : Event()
+    }
+
+    /**
+     * Channel used for events produced by SearchViewModel and
+     * consumed by the SearchFragment.
+     */
+    private val eventChannel = Channel<Event>(Channel.BUFFERED)
+
+    /**
+     * Exposed to SearchFragment, which will use consume
+     * one-time events (e.g., Navigation events, notifications, etc.)
+     */
+    val eventsFlow: Flow<Event> = eventChannel.receiveAsFlow()
 }
