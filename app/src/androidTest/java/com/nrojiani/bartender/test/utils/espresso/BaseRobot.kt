@@ -1,33 +1,34 @@
 package com.nrojiani.bartender.test.utils.espresso
 
 import android.view.View
-import android.view.ViewGroup
 import androidx.test.espresso.*
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.matcher.ViewMatchers.isRoot
 import com.nrojiani.bartender.test.utils.espresso.EspressoExtensions.searchFor
-import org.hamcrest.Description
 import org.hamcrest.Matcher
-import org.hamcrest.TypeSafeMatcher
 import java.lang.Thread.sleep
 
 /**
  * [Source](https://stackoverflow.com/a/56499223/3717025)
  */
 open class BaseRobot {
-    fun doOnView(matcher: Matcher<View>, initialViewAssertion: ViewAssertion, vararg actions: ViewAction) {
+    fun doOnView(
+        viewMatcher: Matcher<View>,
+        initialViewAssertion: ViewAssertion,
+        vararg actions: ViewAction
+    ) {
         actions.forEach {
-            waitForView(matcher, initialViewAssertion).perform(it)
+            waitForView(viewMatcher, initialViewAssertion).perform(it)
         }
     }
 
     fun assertOnView(
-        matcher: Matcher<View>,
-        viewAssertion: ViewAssertion,
+        viewMatcher: Matcher<View>,
+        initialViewAssertion: ViewAssertion,
         vararg assertions: ViewAssertion
     ) {
         assertions.forEach {
-            waitForView(matcher, viewAssertion).check(it)
+            waitForView(viewMatcher, initialViewAssertion).check(it)
         }
     }
 
@@ -37,7 +38,8 @@ open class BaseRobot {
      * upon failure to locate an element, it will fetch a new root view
      * in which to traverse searching for our @param match
      *
-     * @param viewMatcher ViewMatcher used to find our view
+     * @param viewMatcher ViewMatcher used to find our view.
+     * @param initialViewAssertion An initial [ViewAssertion] that we will wait for to be true.
      */
     fun waitForView(
         viewMatcher: Matcher<View>,
@@ -72,27 +74,5 @@ open class BaseRobot {
             }
 
         throw Exception("Error finding a view matching $viewMatcher")
-    }
-
-    private fun nthChildOf(
-        parentMatcher: Matcher<View?>,
-        childPosition: Int
-    ): Matcher<View> = object : TypeSafeMatcher<View>() {
-        override fun describeTo(description: Description) {
-            description.appendText("with $childPosition child view of type parentMatcher")
-        }
-
-        override fun matchesSafely(item: View): Boolean {
-            if (item.parent !is ViewGroup) {
-                return parentMatcher.matches(item.parent)
-            }
-            val group = item.parent as ViewGroup
-            var view: View? = null
-            if (parentMatcher.matches(item.parent)) {
-                view = group.getChildAt(childPosition) as? ViewGroup
-            }
-
-            return view != null && view == item
-        }
     }
 }

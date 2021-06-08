@@ -12,4 +12,8 @@
     <string name="ingredients">Ingredients</string>
     <string name="ingredient_sample_text_lime">Lime</string>
     <string name="glass_with_label">Glass: %s</string>
+    <string name="placeholder_ingredient_name">Elderflower Cordial</string>
+    <string name="placeholder_ingredient_description">Elderflower cordial is a soft drink made largely from a refined sugar and water solution and uses the flowers of the European elderberry. Historically the cordial has been popular in North Western Europe where it has a strong Victorian heritage.</string>
+    <string name="placeholder_glass_text">Glass: Old-fashioned glass</string>
+    <string name="placeholder_drink_instructions">Muddle mint leaves with sugar and lime juice. Add a splash of soda water and fill the glass with cracked ice. Pour the rum and top with soda water. Garnish and serve with straw.</string>
 </resources>

@@ -13,4 +13,13 @@ sealed class Resource<out T> {
     }
 
     val dataOrNull: T? by lazy { (this as? Success<T>)?.data }
+
+    val isLoading: Boolean
+        get() = this is Loading
+
+    val isSuccess: Boolean
+        get() = this is Success<T>
+
+    val isFailure: Boolean
+        get() = this is Failure
 }

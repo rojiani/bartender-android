@@ -59,26 +59,18 @@ class IngredientViewModel @Inject constructor(
     }
 
     val imageUrl: LiveData<String?> = liveData {
-        emit(Ingredient.imageUrl(fragmentArgs.ingredientName, ImageSize.LARGE))
+        emit(Ingredient.imageUrl(fragmentArgs.ingredientName, ImageSize.MEDIUM))
     }
 
     val description: LiveData<String> = ingredientResource.map {
         val desc = it.dataOrNull?.description
         when {
-            desc.isNullOrBlank() -> "Description Unavailable"
+            desc.isNullOrBlank() -> "No description provided for this ingredient."
             else -> desc
         }
     }
 
     val type: LiveData<String> = ingredientResource.map {
         it.dataOrNull?.type.orEmpty()
-    }
-
-    val alcoholic: LiveData<Boolean> = ingredientResource.map {
-        it.dataOrNull?.alcoholic ?: false
-    }
-
-    val abv: LiveData<String?> = ingredientResource.map {
-        it.dataOrNull?.abv.orEmpty()
     }
 }

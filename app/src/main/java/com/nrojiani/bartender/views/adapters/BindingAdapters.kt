@@ -25,12 +25,25 @@ fun loadImage(imageView: ImageView, url: String) {
         .into(imageView)
 }
 
-@BindingAdapter("isGone")
-fun <T> bindIsGone(view: View, resource: Resource<T>) {
-    view.visibility = if (resource is Resource.Success) {
-        View.VISIBLE
-    } else {
-        View.GONE
+/**
+ * VISIBLE only if Resource.Success, else GONE
+ */
+@BindingAdapter("visibleOnSuccess")
+fun <T> bindVisibleOnSuccess(view: View, resource: Resource<T>) {
+    view.visibility = when {
+        resource.isSuccess -> View.VISIBLE
+        else -> View.GONE
+    }
+}
+
+/**
+ * VISIBLE if Resource.Success or Resource.Failure, GONE while Loading
+ */
+@BindingAdapter("isGoneWhileLoading")
+fun <T> bindIsGoneWhileLoading(view: View, resource: Resource<T>) {
+    view.visibility = when {
+        resource.isLoading -> View.GONE
+        else -> View.VISIBLE
     }
 }
 
@@ -39,5 +52,5 @@ fun <T> bindLoadingIndicator(
     progressIndicator: LinearProgressIndicator,
     resource: Resource<T>?
 ) {
-    progressIndicator.isVisible = resource is Resource.Loading
+    progressIndicator.isVisible = resource?.isLoading ?: false
 }

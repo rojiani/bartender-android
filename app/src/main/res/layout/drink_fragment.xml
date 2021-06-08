@@ -107,11 +107,11 @@
                 android:layout_marginTop="@dimen/default_margin"
                 android:text="@{@string/glass_with_label(drinkViewModel.glass)}"
                 android:textSize="14sp"
-                app:isGone="@{drinkViewModel.drinkResource}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/instructions_header"
-                tools:text="Glass: Old-fashioned glass" />
+                app:visibleOnSuccess="@{drinkViewModel.drinkResource}"
+                tools:text="@string/placeholder_glass_text" />
 
             <TextView
                 android:id="@+id/instructions_text"
@@ -120,11 +120,11 @@
                 android:padding="@dimen/double_margin"
                 android:text="@{drinkViewModel.instructions}"
                 android:textSize="16sp"
-                app:isGone="@{drinkViewModel.drinkResource}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/glass_text"
-                tools:text="Muddle mint leaves with sugar and lime juice. Add a splash of soda water and fill the glass with cracked ice. Pour the rum and top with soda water. Garnish and serve with straw." />
+                app:visibleOnSuccess="@{drinkViewModel.drinkResource}"
+                tools:text="@string/placeholder_drink_instructions" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

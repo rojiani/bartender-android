@@ -7,7 +7,7 @@
 
     <!-- Images -->
     <dimen name="ingredient_icon_size">40dp</dimen>
-    <dimen name="medium_drink_image_size">250dp</dimen>
+    <dimen name="medium_image_size">200dp</dimen>
 
     <!-- Text Sizes -->
     <dimen name="large_title_text_size">32sp</dimen>
