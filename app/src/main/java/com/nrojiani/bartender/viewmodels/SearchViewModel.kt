@@ -87,6 +87,21 @@ class SearchViewModel @Inject constructor(
         }
     }
 
+    fun getRandomDrink() {
+        viewModelScope.launch {
+            Timber.d("getRandomDrink()")
+
+            kotlin.runCatching {
+                repository.getRandomDrink()
+            }.onFailure { e ->
+                Timber.e(e, "Error fetching random drink")
+            }.onSuccess { randomDrink ->
+                Timber.d("Fetch random drink ${randomDrink.drinkName}")
+                displayDrinkDetails(randomDrink)
+            }
+        }
+    }
+
     fun drinkNameTextChanged(newValue: CharSequence) {
         _drinkNameText.value = newValue.toString()
     }

@@ -13,7 +13,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import com.nrojiani.bartender.R
-import com.nrojiani.bartender.data.domain.DrinkRef
 import com.nrojiani.bartender.databinding.SearchFragmentBinding
 import com.nrojiani.bartender.viewmodels.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,10 +36,6 @@ class SearchFragment : Fragment() {
 
         binding.searchViewModel = viewModel
         binding.setLifecycleOwner { this.lifecycle }
-
-        binding.temporaryMojitoButton.setOnClickListener {
-            viewModel.displayDrinkDetails(PLACEHOLDER_DRINK_REF)
-        }
 
         consumeEvents()
         observeViewModel()
@@ -84,17 +79,5 @@ class SearchFragment : Fragment() {
                     }
                 }
         }
-    }
-
-    companion object {
-        /**
-         * TODO: remove once replaced by cocktail search results.
-         */
-        @Suppress("ForbiddenComment")
-        private val PLACEHOLDER_DRINK_REF = DrinkRef(
-            id = "11000",
-            drinkName = "Mojito",
-            imageUrl = "https://www.thecocktaildb.com/images/media/drink/metwgh1606770327.jpg"
-        )
     }
 }
