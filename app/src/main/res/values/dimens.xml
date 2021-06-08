@@ -1,8 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Margins -->
     <dimen name="double_margin">32dp</dimen>
     <dimen name="default_margin">16dp</dimen>
-    <dimen name="medium_drink_image_size">350dp</dimen>
+    <dimen name="small_margin">8dp</dimen>
+
+    <!-- Images -->
+    <dimen name="ingredient_icon_size">40dp</dimen>
+    <dimen name="medium_drink_image_size">250dp</dimen>
+
+    <!-- Text Sizes -->
     <dimen name="large_title_text_size">32sp</dimen>
-    <dimen name="medium_title_text_size">18sp</dimen>
+    <dimen name="medium_title_text_size">20sp</dimen>
+
+    <dimen name="ingredient_text_size">16sp</dimen>
+    <dimen name="ingredient_measure_text_size">12sp</dimen>
+
+    <!-- Uncategorized -->
 </resources>

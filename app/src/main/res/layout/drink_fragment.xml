@@ -14,12 +14,11 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".views.DrinkFragment">
+        tools:context=".views.drink.DrinkFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="16dp">
+            android:layout_height="match_parent">
 
             <com.google.android.material.progressindicator.LinearProgressIndicator
                 android:layout_width="match_parent"
@@ -28,29 +27,67 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:loadingIndicator="@{drinkViewModel.drinkResource}" />
 
-            <TextView
-                android:id="@+id/drink_name_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/default_margin"
-                android:textSize="@dimen/large_title_text_size"
-                android:text="@{drinkViewModel.drinkRef.drinkName}"
+            <ImageView
+                android:id="@+id/drink_image"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:contentDescription="@string/content_description_drink_image"
+                app:imageUrl="@{drinkViewModel.drinkRef.imageUrl}"
+                app:layout_constraintDimensionRatio="H,1:1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="Mojito" />
+                tools:src="@drawable/drink_image_placeholder" />
 
-            <ImageView
-                android:id="@+id/drink_image"
-                android:layout_width="@dimen/medium_drink_image_size"
-                android:layout_height="@dimen/medium_drink_image_size"
+            <TextView
+                android:id="@+id/drink_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
-                android:contentDescription="@string/content_description_drink_image"
-                app:imageUrl="@{drinkViewModel.drinkRef.imageUrl}"
+                android:text="@{drinkViewModel.drinkRef.drinkName}"
+                android:textSize="@dimen/large_title_text_size"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/drink_name_text"
-                tools:src="@drawable/drink_image_placeholder" />
+                app:layout_constraintTop_toBottomOf="@id/drink_image"
+                tools:text="Mojito" />
+
+            <TextView
+                android:id="@+id/ingredients_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_margin"
+                android:text="@string/ingredients"
+                android:textSize="@dimen/medium_title_text_size"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/drink_title" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/ingredients_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/default_margin"
+                android:overScrollMode="never"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ingredients_header">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <View
+                android:id="@+id/ingredients_instructions_divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="@dimen/double_margin"
+                android:layout_marginTop="@dimen/default_margin"
+                android:layout_marginEnd="@dimen/double_margin"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintBottom_toTopOf="@+id/instructions_header"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ingredients_list" />
 
             <TextView
                 android:id="@+id/instructions_header"
@@ -61,17 +98,32 @@
                 android:textSize="@dimen/medium_title_text_size"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/drink_image" />
+                app:layout_constraintTop_toBottomOf="@+id/ingredients_instructions_divider" />
+
+            <TextView
+                android:id="@+id/glass_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_margin"
+                android:text="@{@string/glass_with_label(drinkViewModel.glass)}"
+                android:textSize="14sp"
+                app:isGone="@{drinkViewModel.drinkResource}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/instructions_header"
+                tools:text="Glass: Old-fashioned glass" />
 
             <TextView
                 android:id="@+id/instructions_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/default_margin"
-                app:drinkInstructions="@{drinkViewModel.drinkResource}"
+                android:padding="@dimen/double_margin"
+                android:text="@{drinkViewModel.instructions}"
+                android:textSize="16sp"
+                app:isGone="@{drinkViewModel.drinkResource}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/instructions_header"
+                app:layout_constraintTop_toBottomOf="@+id/glass_text"
                 tools:text="Muddle mint leaves with sugar and lime juice. Add a splash of soda water and fill the glass with cracked ice. Pour the rum and top with soda water. Garnish and serve with straw." />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

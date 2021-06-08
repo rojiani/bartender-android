@@ -8,4 +8,7 @@
     <string name="get_random_drink_button_label">Get Random Drink</string>
     <string name="content_description_drink_image">drink image</string>
     <string name="instructions_title">Instructions</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="ingredient_sample_text_lime">Lime</string>
+    <string name="glass_with_label">Glass: %s</string>
 </resources>

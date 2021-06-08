@@ -12,7 +12,7 @@ internal fun parseTags(commaSeparatedString: String?): List<String> =
 internal val NetworkDrink.ingredientMeasures: List<IngredientMeasure>
     get() = allIngredients.zip(allMeasures)
         .map { (ingredient, measure) ->
-            ingredient ?: return@map null
+            if (ingredient.isNullOrBlank()) return@map null
 
             // Some ingredients (like "Salt") don't always have a measure.
             // Measures often have trailing whitespace.
