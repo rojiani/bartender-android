@@ -15,13 +15,13 @@ class IngredientTest {
             abv = "0"
         )
 
-        ginIngredient.imageUrl(ImageSize.SMALL)
+        Ingredient.imageUrl(ginIngredient.name, ImageSize.SMALL)
             .shouldBe("https://www.thecocktaildb.com/images/ingredients/Elderflower%20cordial-small.png")
 
-        ginIngredient.imageUrl(ImageSize.MEDIUM)
+        Ingredient.imageUrl(ginIngredient.name, ImageSize.MEDIUM)
             .shouldBe("https://www.thecocktaildb.com/images/ingredients/Elderflower%20cordial-medium.png")
 
-        ginIngredient.imageUrl(ImageSize.LARGE)
+        Ingredient.imageUrl(ginIngredient.name, ImageSize.LARGE)
             .shouldBe("https://www.thecocktaildb.com/images/ingredients/Elderflower%20cordial.png")
     }
 }
