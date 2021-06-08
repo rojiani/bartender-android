@@ -25,7 +25,7 @@ class SearchFragmentTest {
     var hiltRule = HiltAndroidRule(this)
 
     @Test
-    fun testNavigateToCocktailFragment() {
+    fun when_random_drink_button_is_clicked_navigate_to_the_DrinkFragment() {
         // GIVEN: SearchFragment is visible
         val scenario = launchFragmentInContainer<SearchFragment>(
             themeResId = R.style.Theme_Bartender
@@ -36,11 +36,11 @@ class SearchFragmentTest {
             Navigation.setViewNavController(fragment.requireView(), mockNavController)
         }
 
-        // WHEN: Temporary Cocktail button is clicked
+        // WHEN: Random Drink Button is clicked
         onView(withId(R.id.temporary_random_drink_button))
             .perform(click())
 
-        // THEN: Verify navigation to the CocktailFragment screen
+        // THEN: Verify navigation to the DrinkFragment screen
         verify {
             mockNavController.navigate(any<NavDirections>())
         }

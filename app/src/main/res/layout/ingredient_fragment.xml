@@ -21,22 +21,12 @@
             android:layout_height="match_parent">
 
             <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/ingredient_progress_indicator"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:indeterminate="true"
                 app:layout_constraintTop_toTopOf="parent"
                 app:loadingIndicator="@{ingredientViewModel.ingredientResource}" />
-
-            <ImageView
-                android:id="@+id/ingredient_image"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:contentDescription="@string/content_description_ingredient_image"
-                app:imageUrl="@{ingredientViewModel.imageUrl}"
-                app:layout_constraintDimensionRatio="H,1:1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/ingredient_title"
@@ -48,8 +38,20 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ingredient_image"
-                tools:text="Elderflower Cordial" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/placeholder_ingredient_name" />
+
+            <ImageView
+                android:id="@+id/ingredient_image"
+                android:layout_width="@dimen/medium_image_size"
+                android:layout_height="@dimen/medium_image_size"
+                android:layout_margin="@dimen/default_margin"
+                android:contentDescription="@string/content_description_ingredient_image"
+                app:imageUrl="@{ingredientViewModel.imageUrl}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ingredient_title"
+                tools:src="@drawable/ingredient_image_medium" />
 
             <TextView
                 android:id="@+id/ingredient_description_text"
@@ -58,11 +60,11 @@
                 android:padding="@dimen/double_margin"
                 android:text="@{ingredientViewModel.description}"
                 android:textSize="16sp"
-                app:isGone="@{ingredientViewModel.ingredientResource}"
+                app:isGoneWhileLoading="@{ingredientViewModel.ingredientResource}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ingredient_title"
-                tools:text="Elderflower cordial is a soft drink made largely from a refined sugar and water solution and uses the flowers of the European elderberry. Historically the cordial has been popular in North Western Europe where it has a strong Victorian heritage." />
+                app:layout_constraintTop_toBottomOf="@+id/ingredient_image"
+                tools:text="@string/placeholder_ingredient_description" />
 
             <!-- TODO: Type, Contains Alcohol, ABV -->
 

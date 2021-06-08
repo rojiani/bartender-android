@@ -2,6 +2,7 @@ package com.nrojiani.bartender.test.utils.espresso
 
 import android.content.res.Resources
 import android.view.View
+import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import org.hamcrest.Description
 import org.hamcrest.Matcher
@@ -36,7 +37,7 @@ class RecyclerViewMatcher(private val recyclerViewId: Int) {
                     }
                 }
 
-                description.appendText("with id: " + idDescription)
+                description.appendText("with id: $idDescription")
             }
 
             override fun matchesSafely(view: View): Boolean {
@@ -59,6 +60,28 @@ class RecyclerViewMatcher(private val recyclerViewId: Int) {
                     view === targetView
                 }
             }
+        }
+    }
+
+    fun nthChildOf(
+        parentMatcher: Matcher<View?>,
+        childPosition: Int
+    ): Matcher<View> = object : TypeSafeMatcher<View>() {
+        override fun describeTo(description: Description) {
+            description.appendText("with $childPosition child view of type parentMatcher")
+        }
+
+        override fun matchesSafely(item: View): Boolean {
+            if (item.parent !is ViewGroup) {
+                return parentMatcher.matches(item.parent)
+            }
+            val group = item.parent as ViewGroup
+            var view: View? = null
+            if (parentMatcher.matches(item.parent)) {
+                view = group.getChildAt(childPosition) as? ViewGroup
+            }
+
+            return view != null && view == item
         }
     }
 }
