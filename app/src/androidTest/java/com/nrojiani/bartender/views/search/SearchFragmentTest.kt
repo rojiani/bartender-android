@@ -37,7 +37,7 @@ class SearchFragmentTest {
         }
 
         // WHEN: Temporary Cocktail button is clicked
-        onView(withId(R.id.temporary_mojito_button))
+        onView(withId(R.id.temporary_random_drink_button))
             .perform(click())
 
         // THEN: Verify navigation to the CocktailFragment screen
