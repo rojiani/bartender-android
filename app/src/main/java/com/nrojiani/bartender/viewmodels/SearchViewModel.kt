@@ -37,12 +37,6 @@ class SearchViewModel @Inject constructor(
     fun getDrinksWithName(drinkName: String) {
         viewModelScope.launch {
             Timber.d("getDrinksWithName($drinkName)")
-            if (drinkName.isNullOrBlank()) {
-                _drinkNameSearchResults.value =
-                    Resource.Failure(IllegalArgumentException("must not be null/blank...TODO: validation"))
-                return@launch
-            }
-
             _drinkNameSearchResults.value = Resource.Loading
 
             kotlin.runCatching {
