@@ -41,3 +41,7 @@ An Android app for finding cocktail recipes.
 ### TheCocktailDB API
 
 See [TheCocktailDB API](https://www.thecocktaildb.com/api.php) page for resources. This project contains a [Postman Collection](https://www.postman.com/collection/) (v. 2.1) [here](config/dev/postman-api/TheCocktailDB-API.postman_collection.json).
+
+### Images
+
+[Barman Vector](https://www.vecteezy.com/vector-art/102830-barman-vector)
