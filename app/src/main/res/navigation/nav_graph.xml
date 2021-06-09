@@ -12,7 +12,11 @@
         tools:layout="@layout/search_fragment">
         <action
             android:id="@+id/action_searchFragment_to_drinkFragment"
-            app:destination="@id/drinkFragment" />
+            app:destination="@id/drinkFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -25,13 +29,18 @@
             app:argType="com.nrojiani.bartender.data.domain.DrinkRef" />
         <action
             android:id="@+id/action_drinkFragment_to_ingredientFragment"
-            app:destination="@id/ingredientFragment" />
+            app:destination="@id/ingredientFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
         android:id="@+id/ingredientFragment"
         android:name="com.nrojiani.bartender.views.ingredient.IngredientFragment"
-        android:label="IngredientFragment" >
+        android:label="ingredient_fragment"
+        tools:layout="@layout/ingredient_fragment">
         <argument
             android:name="ingredientName"
             app:argType="string" />
