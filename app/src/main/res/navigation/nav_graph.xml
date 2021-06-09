@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.nrojiani.bartender.views.search.SearchFragment"
-        android:label="search_fragment"
+        android:label="@string/title_search_fragment"
         tools:layout="@layout/search_fragment">
         <action
             android:id="@+id/action_searchFragment_to_drinkFragment"
@@ -22,7 +22,7 @@
     <fragment
         android:id="@+id/drinkFragment"
         android:name="com.nrojiani.bartender.views.drink.DrinkFragment"
-        android:label="drink_fragment"
+        android:label="@string/title_drink_fragment"
         tools:layout="@layout/drink_fragment">
         <argument
             android:name="drinkRef"
@@ -39,10 +39,17 @@
     <fragment
         android:id="@+id/ingredientFragment"
         android:name="com.nrojiani.bartender.views.ingredient.IngredientFragment"
-        android:label="ingredient_fragment"
+        android:label="@string/title_ingredient_fragment"
         tools:layout="@layout/ingredient_fragment">
         <argument
             android:name="ingredientName"
             app:argType="string" />
     </fragment>
+
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="com.nrojiani.bartender.views.favorites.FavoritesFragment"
+        android:label="Favorites"
+        tools:layout="@layout/favorites_fragment" />
+
 </navigation>
