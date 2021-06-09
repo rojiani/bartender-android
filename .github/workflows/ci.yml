@@ -76,7 +76,7 @@ jobs:
           api-level: ${{ matrix.api-level }}
           arch: x86
           disable-animations: true
-          script: ./gradlew app:connectedDebugAndroidTest --stacktrace
+          script: ./gradlew connectedCheck --info --stacktrace
 
       - name: Upload test reports
         if: always()
