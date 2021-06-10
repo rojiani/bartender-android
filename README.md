@@ -45,3 +45,5 @@ See [TheCocktailDB API](https://www.thecocktaildb.com/api.php) page for resource
 ### Images
 
 [Barman Vector](https://www.vecteezy.com/vector-art/102830-barman-vector)
+
+<div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
