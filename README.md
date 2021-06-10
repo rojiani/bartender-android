@@ -1,10 +1,9 @@
 # Bartender
+![](docs/assets/logo.png)
 
 ***Work in Progress***
 
 An Android app for finding cocktail recipes.
-
-![mojito](https://www.thecocktaildb.com/images/media/drink/metwgh1606770327.jpg)
 
 ## Built With
 
