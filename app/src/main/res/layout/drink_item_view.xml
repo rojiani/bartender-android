@@ -14,36 +14,47 @@
             type="com.nrojiani.bartender.views.search.drinks.DrinkClickListener" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/drink_search_result_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:checkable="true"
+        android:clickable="true"
+        android:focusable="true"
         android:onClick="@{() -> clickListener.onClick(drink)}"
-        android:orientation="vertical">
+        app:cardUseCompatPadding="true">
 
-        <ImageView
-            android:id="@+id/drink_icon"
-            android:layout_width="@dimen/drink_icon_size"
-            android:layout_height="@dimen/drink_icon_size"
-            android:layout_margin="@dimen/default_margin"
-            app:imageUrl="@{drink.iconUrl}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@drawable/drink_icon_placeholder" />
-
-        <TextView
-            android:id="@+id/drink_name_text"
-            android:layout_width="0dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_margin"
-            android:gravity="fill_vertical|center_horizontal"
-            android:text="@{drink.drinkName}"
-            android:textAppearance="@style/TextAppearance.Body1"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="@string/placeholder_drink_name" />
+            android:layout_marginHorizontal="@dimen/small_margin"
+            android:orientation="vertical">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <ImageView
+                android:id="@+id/drink_icon"
+                android:layout_width="@dimen/drink_icon_size"
+                android:layout_height="@dimen/drink_icon_size"
+                android:layout_margin="@dimen/default_margin"
+                app:imageUrl="@{drink.iconUrl}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@drawable/drink_icon_placeholder" />
+
+            <TextView
+                android:id="@+id/drink_name_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin"
+                android:gravity="fill_vertical|center_horizontal"
+                android:text="@{drink.drinkName}"
+                android:textAppearance="@style/TextAppearance.Body1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/placeholder_drink_name" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
 </layout>

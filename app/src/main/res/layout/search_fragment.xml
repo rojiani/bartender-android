@@ -48,8 +48,8 @@
                     android:id="@+id/search_drink_by_name_text_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:singleLine="true"
                     android:onTextChanged="@{(s, start, before, count) -> searchViewModel.drinkNameTextChanged(s)}"
+                    android:singleLine="true"
                     tools:text="gin and tonic" />
 
                 <Button
@@ -70,22 +70,23 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/search_drink_by_name_text_input_layout">
+                app:layout_constraintTop_toBottomOf="@+id/search_drink_by_name_text_input_layout"
+                tools:listitem="@layout/drink_item_view">
 
             </androidx.recyclerview.widget.RecyclerView>
 
             <!-- Temporary button for navigation -->
-<!--            <Button-->
-<!--                android:id="@+id/temporary_random_drink_button"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="@dimen/default_margin"-->
-<!--                android:onClick="@{() -> searchViewModel.getRandomDrink()}"-->
-<!--                android:text="@string/get_random_drink_button_label"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@id/drink_search_results_list" />-->
+            <!--            <Button-->
+            <!--                android:id="@+id/temporary_random_drink_button"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="@dimen/default_margin"-->
+            <!--                android:onClick="@{() -> searchViewModel.getRandomDrink()}"-->
+            <!--                android:text="@string/get_random_drink_button_label"-->
+            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@id/drink_search_results_list" />-->
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

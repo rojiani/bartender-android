@@ -72,7 +72,8 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ingredients_header">
+                app:layout_constraintTop_toBottomOf="@+id/ingredients_header"
+                tools:listitem="@layout/ingredient_measure_item_view">
 
             </androidx.recyclerview.widget.RecyclerView>
 
