@@ -33,30 +33,34 @@
 
         <TextView
             android:id="@+id/ingredient_name_text"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_marginStart="@dimen/default_margin"
-            android:gravity="center_vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/default_margin"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="@dimen/double_margin"
+            android:gravity="fill_vertical"
             android:text="@{ingredientMeasure.ingredientName}"
-            android:textSize="@dimen/ingredient_text_size"
+            android:textAppearance="@style/TextAppearance.Body2"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/ingredient_measure_text"
             app:layout_constraintStart_toEndOf="@+id/ingredient_icon"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="@string/ingredient_sample_text_lime" />
 
         <TextView
             android:id="@+id/ingredient_measure_text"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_margin="@dimen/default_margin"
-            android:gravity="center_vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/double_margin"
+            android:layout_marginVertical="@dimen/default_margin"
+            android:gravity="fill_vertical"
             android:text="@{ingredientMeasure.measure}"
-            android:textSize="@dimen/ingredient_text_size"
+            android:textAppearance="@style/TextAppearance.Body2"
             app:layout_constraintBaseline_toBaselineOf="@id/ingredient_name_text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="8 oz foobar" />
+            tools:text="8 oz tonic water" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

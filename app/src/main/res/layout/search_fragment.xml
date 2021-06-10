@@ -22,6 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/double_margin"
             android:text="@string/placeholder_search_fragment"
+            android:textAppearance="@style/TextAppearance.H2"
             app:layout_constraintBottom_toTopOf="@id/temporary_random_drink_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -33,8 +34,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_margin"
-            android:text="@string/get_random_drink_button_label"
             android:onClick="@{() -> searchViewModel.getRandomDrink()}"
+            android:text="@string/get_random_drink_button_label"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/search_fragment_placeholder_text" />
@@ -45,6 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_margin"
             android:text="Search for a Drink"
+            android:textAppearance="@style/TextAppearance.H2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/temporary_random_drink_button" />

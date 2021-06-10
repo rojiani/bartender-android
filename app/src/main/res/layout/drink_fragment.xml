@@ -13,7 +13,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         tools:context=".views.drink.DrinkFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -44,13 +44,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
+                android:gravity="center_horizontal"
                 android:text="@{drinkViewModel.drinkRef.drinkName}"
-                android:textSize="@dimen/large_title_text_size"
-                android:textStyle="bold"
+                android:textAppearance="@style/TextAppearance.H1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/drink_image"
-                tools:text="Mojito" />
+                tools:text="Mojito Long Name Mojito Long Name" />
 
             <TextView
                 android:id="@+id/ingredients_header"
@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
                 android:text="@string/ingredients"
-                android:textSize="@dimen/medium_title_text_size"
+                android:textAppearance="@style/TextAppearance.H2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/drink_title" />
@@ -95,7 +95,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
                 android:text="@string/instructions_title"
-                android:textSize="@dimen/medium_title_text_size"
+                android:textAppearance="@style/TextAppearance.H2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ingredients_instructions_divider" />
@@ -104,9 +104,9 @@
                 android:id="@+id/glass_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/default_margin"
+                android:layout_marginTop="@dimen/small_margin"
                 android:text="@{@string/glass_with_label(drinkViewModel.glass)}"
-                android:textSize="14sp"
+                android:textAppearance="@style/TextAppearance.Subtitle1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/instructions_header"
@@ -119,7 +119,7 @@
                 android:layout_height="wrap_content"
                 android:padding="@dimen/double_margin"
                 android:text="@{drinkViewModel.instructions}"
-                android:textSize="16sp"
+                android:textAppearance="@style/TextAppearance.Body1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/glass_text"
