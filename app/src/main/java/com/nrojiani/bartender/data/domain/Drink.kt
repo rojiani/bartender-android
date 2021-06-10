@@ -16,6 +16,11 @@ data class Drink(
     val imageUrl: String,
     val ingredientMeasures: List<IngredientMeasure>,
 ) {
+    /**
+     * URL for a 100x100 image
+     */
+    val iconUrl: String = "$imageUrl/preview"
+
     fun toDrinkRef(): DrinkRef = DrinkRef(
         id = id,
         drinkName = drinkName,

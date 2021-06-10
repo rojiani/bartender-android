@@ -31,7 +31,7 @@ class DrinkFragmentTest {
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
 
-    private var robot = BaseRobot()
+    private val robot = BaseRobot()
 
     private lateinit var mockNavController: NavController
 
@@ -101,7 +101,7 @@ class DrinkFragmentTest {
             matches(withEffectiveVisibility(Visibility.VISIBLE))
         )
 
-        // WHEN: Random Drink Button is clicked
+        // WHEN: Ingredient is clicked
         onView(
             withRecyclerView(R.id.ingredients_list)
                 .atPositionOnView(0, R.id.ingredient_name_text)

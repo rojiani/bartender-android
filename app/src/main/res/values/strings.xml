@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Bartender</string>
-    <string name="placeholder_search_fragment">Temporary UI for Search Fragment</string>
     <string name="placeholder_mojito_button_text">Show Mojito Details</string>
     <string name="drink_name_search_hint">Drink Name</string>
     <string name="search_button_label">Search</string>
@@ -12,10 +11,6 @@
     <string name="ingredients">Ingredients</string>
     <string name="ingredient_sample_text_lime">Roses sweetened lime juice</string>
     <string name="glass_with_label">Glass: %s</string>
-    <string name="placeholder_ingredient_name">Elderflower Cordial</string>
-    <string name="placeholder_ingredient_description">Elderflower cordial is a soft drink made largely from a refined sugar and water solution and uses the flowers of the European elderberry. Historically the cordial has been popular in North Western Europe where it has a strong Victorian heritage.</string>
-    <string name="placeholder_glass_text">Glass: Old-fashioned glass</string>
-    <string name="placeholder_drink_instructions">Muddle mint leaves with sugar and lime juice. Add a splash of soda water and fill the glass with cracked ice. Pour the rum and top with soda water. Garnish and serve with straw.</string>
     <string name="search">Search</string>
     <string name="favorite_drinks">Favorite Drinks</string>
     <string name="title_search_fragment">Search</string>
@@ -23,4 +18,11 @@
     <string name="title_ingredient_fragment">Ingredient</string>
     <string name="favorites_title">Favorites</string>
     <string name="content_description_bartender_logo">Bartender logo</string>
+    <string name="search_for_a_drink">Search for a Drink</string>
+    <string name="placeholder_search_fragment">Temporary UI for Search Fragment</string>
+    <string name="placeholder_ingredient_name">Elderflower Cordial</string>
+    <string name="placeholder_drink_name">Elderflower Caipirinha</string>
+    <string name="placeholder_ingredient_description">Elderflower cordial is a soft drink made largely from a refined sugar and water solution and uses the flowers of the European elderberry. Historically the cordial has been popular in North Western Europe where it has a strong Victorian heritage.</string>
+    <string name="placeholder_glass_text">Glass: Old-fashioned glass</string>
+    <string name="placeholder_drink_instructions">Muddle mint leaves with sugar and lime juice. Add a splash of soda water and fill the glass with cracked ice. Pour the rum and top with soda water. Garnish and serve with straw.</string>
 </resources>

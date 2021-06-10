@@ -50,9 +50,9 @@ object NetworkModule {
                 Timber.tag("OkHttp").d(message)
             }.apply {
                 level = if (BuildConfig.DEBUG) {
-                    HttpLoggingInterceptor.Level.BODY
-                } else {
                     HttpLoggingInterceptor.Level.HEADERS
+                } else {
+                    HttpLoggingInterceptor.Level.BASIC
                 }
             }
         )
