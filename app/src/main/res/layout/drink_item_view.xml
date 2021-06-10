@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="drink"
+            type="com.nrojiani.bartender.data.domain.Drink" />
+
+        <variable
+            name="clickListener"
+            type="com.nrojiani.bartender.views.search.drinks.DrinkClickListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="@{() -> clickListener.onClick(drink)}"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/drink_icon"
+            android:layout_width="@dimen/drink_icon_size"
+            android:layout_height="@dimen/drink_icon_size"
+            android:layout_margin="@dimen/default_margin"
+            app:imageUrl="@{drink.iconUrl}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@drawable/drink_icon_placeholder" />
+
+        <TextView
+            android:id="@+id/drink_name_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
+            android:gravity="fill_vertical|center_horizontal"
+            android:text="@{drink.drinkName}"
+            android:textAppearance="@style/TextAppearance.Body1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/placeholder_drink_name" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

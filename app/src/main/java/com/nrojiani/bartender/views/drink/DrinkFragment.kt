@@ -53,8 +53,6 @@ class DrinkFragment : Fragment() {
                 }
             )
 
-        // Don't show animations. It's at most 15 items.
-        // binding.ingredientsList.itemAnimator = null
         binding.ingredientsList.adapter = adapter
 
         consumeEvents()

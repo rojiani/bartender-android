@@ -15,9 +15,9 @@ class NetworkModuleTest {
             .filterIsInstance<HttpLoggingInterceptor>()
             .first()
         if (BuildConfig.DEBUG) {
-            loggingInterceptor.level.shouldBe(HttpLoggingInterceptor.Level.BODY)
-        } else {
             loggingInterceptor.level.shouldBe(HttpLoggingInterceptor.Level.HEADERS)
+        } else {
+            loggingInterceptor.level.shouldBe(HttpLoggingInterceptor.Level.BASIC)
         }
     }
 }

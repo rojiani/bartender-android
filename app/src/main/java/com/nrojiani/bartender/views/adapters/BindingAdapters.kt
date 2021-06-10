@@ -7,11 +7,15 @@ import android.widget.ImageView
 import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.nrojiani.bartender.R
 import com.nrojiani.bartender.data.Resource
+import com.nrojiani.bartender.data.domain.Drink
+import com.nrojiani.bartender.views.search.drinks.DrinkAdapter
+import timber.log.Timber
 
 @BindingAdapter("imageUrl")
 fun loadImage(imageView: ImageView, url: String) {
@@ -29,8 +33,9 @@ fun loadImage(imageView: ImageView, url: String) {
  * VISIBLE only if Resource.Success, else GONE
  */
 @BindingAdapter("visibleOnSuccess")
-fun <T> bindVisibleOnSuccess(view: View, resource: Resource<T>) {
+fun <T> bindVisibleOnSuccess(view: View, resource: Resource<T>?) {
     view.visibility = when {
+        resource == null -> View.GONE
         resource.isSuccess -> View.VISIBLE
         else -> View.GONE
     }
@@ -40,8 +45,9 @@ fun <T> bindVisibleOnSuccess(view: View, resource: Resource<T>) {
  * VISIBLE if Resource.Success or Resource.Failure, GONE while Loading
  */
 @BindingAdapter("isGoneWhileLoading")
-fun <T> bindIsGoneWhileLoading(view: View, resource: Resource<T>) {
+fun <T> bindIsGoneWhileLoading(view: View, resource: Resource<T>?) {
     view.visibility = when {
+        resource == null -> View.GONE
         resource.isLoading -> View.GONE
         else -> View.VISIBLE
     }
@@ -53,4 +59,11 @@ fun <T> bindLoadingIndicator(
     resource: Resource<T>?
 ) {
     progressIndicator.isVisible = resource?.isLoading ?: false
+}
+
+@BindingAdapter("drinksByNameSearchData")
+fun bindDrinksByNameSearchData(recyclerView: RecyclerView, data: List<Drink>?) {
+    val adapter = recyclerView.adapter as DrinkAdapter
+    Timber.d("submitList")
+    adapter.submitList(data)
 }

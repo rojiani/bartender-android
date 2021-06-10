@@ -12,9 +12,14 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ListAdapter
 import com.nrojiani.bartender.R
+import com.nrojiani.bartender.data.Resource
+import com.nrojiani.bartender.data.domain.Drink
 import com.nrojiani.bartender.databinding.SearchFragmentBinding
 import com.nrojiani.bartender.viewmodels.SearchViewModel
+import com.nrojiani.bartender.views.search.drinks.DrinkAdapter
+import com.nrojiani.bartender.views.search.drinks.DrinkClickListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -37,6 +42,15 @@ class SearchFragment : Fragment() {
         binding.searchViewModel = viewModel
         binding.setLifecycleOwner { this.lifecycle }
 
+        val adapter: ListAdapter<Drink, DrinkAdapter.ViewHolder> =
+            DrinkAdapter(
+                clickListener = DrinkClickListener { drink ->
+                    viewModel.displayDrinkDetails(drink = drink)
+                }
+            )
+
+        binding.drinkSearchResultsList.adapter = adapter
+
         consumeEvents()
         observeViewModel()
 
@@ -48,14 +62,16 @@ class SearchFragment : Fragment() {
 
             drinkNameText.observe(viewLifecycleOwner) {
                 Timber.d("[drinkNameText]: $it")
+                viewModel.getDrinksWithName(it)
             }
 
-            drinkNameSearchResults.observe(viewLifecycleOwner) { matches ->
-                Timber.d("[drinkNameSearchResults]: $matches")
-            }
-
-            drinkFirstLetterSearchResults.observe(viewLifecycleOwner) { matches ->
-                Timber.d("[drinkFirstCharSearchResults]: $matches")
+            drinkNameSearchResource.observe(viewLifecycleOwner) {
+                val state = when (it) {
+                    is Resource.Success -> "Success"
+                    is Resource.Failure -> "Failure"
+                    is Resource.Loading -> "Loading"
+                }
+                Timber.d("[drinkNameSearchResource]: $state")
             }
         }
     }

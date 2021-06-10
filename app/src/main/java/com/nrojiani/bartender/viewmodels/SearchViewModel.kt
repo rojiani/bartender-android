@@ -1,9 +1,6 @@
 package com.nrojiani.bartender.viewmodels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.nrojiani.bartender.data.Resource
 import com.nrojiani.bartender.data.domain.Drink
 import com.nrojiani.bartender.data.domain.DrinkRef
@@ -13,7 +10,6 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import java.lang.IllegalArgumentException
 import javax.inject.Inject
 
 @Suppress("ForbiddenComment")
@@ -26,57 +22,38 @@ class SearchViewModel @Inject constructor(
     val drinkNameText: LiveData<String>
         get() = _drinkNameText
 
-    private val _drinkNameSearchResults = MutableLiveData<Resource<List<Drink>>>()
-    val drinkNameSearchResults: LiveData<Resource<List<Drink>>>
-        get() = _drinkNameSearchResults
+    private val _drinkNameSearchResource = MutableLiveData<Resource<List<Drink>>>()
+    val drinkNameSearchResource: LiveData<Resource<List<Drink>>>
+        get() = _drinkNameSearchResource
 
-    private val _drinkFirstLetterSearchResults = MutableLiveData<Resource<List<Drink>>>()
-    val drinkFirstLetterSearchResults: LiveData<Resource<List<Drink>>>
-        get() = _drinkFirstLetterSearchResults
+    val drinksByNameSearchResults: LiveData<List<Drink>> = drinkNameSearchResource.map {
+        it.dataOrNull ?: emptyList()
+    }
+
+    private val inMemoryDrinkNameSearchCache: MutableMap<String, Resource<List<Drink>>> = LinkedHashMap()
 
     fun getDrinksWithName(drinkName: String) {
+        if (drinkName in inMemoryDrinkNameSearchCache) {
+            Timber.d("$drinkName in cache")
+            _drinkNameSearchResource.value = inMemoryDrinkNameSearchCache[drinkName]
+            return
+        }
+
         viewModelScope.launch {
             Timber.d("getDrinksWithName($drinkName)")
-            _drinkNameSearchResults.value = Resource.Loading
+
+            _drinkNameSearchResource.value = Resource.Loading
 
             kotlin.runCatching {
                 repository.getDrinksByName(drinkName)
             }.onFailure { e ->
                 Timber.e(e, "Error fetching drinks")
-                _drinkNameSearchResults.value = Resource.Failure(e)
+                _drinkNameSearchResource.value = Resource.Failure(e)
+                inMemoryDrinkNameSearchCache[drinkName] = Resource.Failure(e)
             }.onSuccess { matches ->
                 Timber.d("Found ${matches.size} matches")
-                _drinkNameSearchResults.value = Resource.Success(matches)
-            }
-        }
-    }
-
-    fun getDrinksStartingWithLetter(firstLetter: String) {
-        viewModelScope.launch {
-            if (firstLetter.isNullOrBlank()) {
-                _drinkFirstLetterSearchResults.value =
-                    Resource.Failure(IllegalArgumentException("must not be null/blank...TODO: validation"))
-                return@launch
-            }
-
-            Timber.d("getDrinksStartingWithLetter($firstLetter)")
-
-            if (firstLetter.length != 1) {
-                _drinkFirstLetterSearchResults.value =
-                    Resource.Failure(IllegalArgumentException("must be single char...TODO: validation"))
-                return@launch
-            }
-
-            _drinkFirstLetterSearchResults.value = Resource.Loading
-
-            kotlin.runCatching {
-                repository.getDrinksByLetter(firstLetter.first())
-            }.onFailure { e ->
-                Timber.e(e, "Error fetching drinks")
-                _drinkFirstLetterSearchResults.value = Resource.Failure(e)
-            }.onSuccess { matches ->
-                Timber.d("Found ${matches.size} matches")
-                _drinkFirstLetterSearchResults.value = Resource.Success(matches)
+                _drinkNameSearchResource.value = Resource.Success(matches)
+                inMemoryDrinkNameSearchCache[drinkName] = Resource.Success(matches)
             }
         }
     }
@@ -97,7 +74,7 @@ class SearchViewModel @Inject constructor(
     }
 
     fun drinkNameTextChanged(newValue: CharSequence) {
-        _drinkNameText.value = newValue.toString()
+        _drinkNameText.value = newValue.trim().toString()
     }
 
     sealed class Event {
