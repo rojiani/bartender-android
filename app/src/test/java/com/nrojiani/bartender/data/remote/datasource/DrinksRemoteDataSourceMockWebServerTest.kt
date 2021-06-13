@@ -57,8 +57,11 @@ class DrinksRemoteDataSourceMockWebServerTest : MockWebServerTest() {
             margaritas.shouldHaveSize(6)
         }
         val recordedRequest = takeRequest()
-        recordedRequest.shouldBeHttpMethod(HttpRequestMethod.GET)
-        recordedRequest.shouldHavePath("search.php?s=margarita")
+        recordedRequest.apply {
+            shouldNotBeNull()
+            shouldBeHttpMethod(HttpRequestMethod.GET)
+            shouldHavePath("search.php?s=margarita")
+        }
     }
 
     @Test
@@ -70,8 +73,11 @@ class DrinksRemoteDataSourceMockWebServerTest : MockWebServerTest() {
             dto.toDomainModel().shouldBeEmpty()
         }
         val recordedRequest = takeRequest()
-        recordedRequest.shouldBeHttpMethod(HttpRequestMethod.GET)
-        recordedRequest.shouldHavePath("search.php?s=asdf")
+        recordedRequest.apply {
+            shouldNotBeNull()
+            shouldBeHttpMethod(HttpRequestMethod.GET)
+            shouldHavePath("search.php?s=asdf")
+        }
     }
 
     @Test
@@ -83,8 +89,11 @@ class DrinksRemoteDataSourceMockWebServerTest : MockWebServerTest() {
             drinks.shouldHaveSize(25)
         }
         val recordedRequest = takeRequest()
-        recordedRequest.shouldBeHttpMethod(HttpRequestMethod.GET)
-        recordedRequest.shouldHavePath("search.php?f=a")
+        recordedRequest.apply {
+            shouldNotBeNull()
+            shouldBeHttpMethod(HttpRequestMethod.GET)
+            shouldHavePath("search.php?f=a")
+        }
     }
 
     @Test
@@ -96,8 +105,11 @@ class DrinksRemoteDataSourceMockWebServerTest : MockWebServerTest() {
             ingredients.shouldHaveSize(1)
         }
         val recordedRequest = takeRequest()
-        recordedRequest.shouldBeHttpMethod(HttpRequestMethod.GET)
-        recordedRequest.shouldHavePath("search.php?i=gin")
+        recordedRequest.apply {
+            shouldNotBeNull()
+            shouldBeHttpMethod(HttpRequestMethod.GET)
+            shouldHavePath("search.php?i=gin")
+        }
     }
 
     @Test
@@ -109,8 +121,11 @@ class DrinksRemoteDataSourceMockWebServerTest : MockWebServerTest() {
             ginDrinks.shouldHaveSize(100)
         }
         val recordedRequest = takeRequest()
-        recordedRequest.shouldBeHttpMethod(HttpRequestMethod.GET)
-        recordedRequest.shouldHavePath("filter.php?i=Gin")
+        recordedRequest.apply {
+            shouldNotBeNull()
+            shouldBeHttpMethod(HttpRequestMethod.GET)
+            shouldHavePath("filter.php?i=Gin")
+        }
     }
 
     @Test
@@ -122,9 +137,13 @@ class DrinksRemoteDataSourceMockWebServerTest : MockWebServerTest() {
             dto.toDomainModel().shouldBeEmpty()
         }
         val recordedRequest = takeRequest()
-        recordedRequest.shouldBeHttpMethod(HttpRequestMethod.GET)
-        recordedRequest.shouldHavePath("filter.php?i=asdf")
+        recordedRequest.apply {
+            shouldNotBeNull()
+            shouldBeHttpMethod(HttpRequestMethod.GET)
+            shouldHavePath("filter.php?i=asdf")
+        }
     }
+
     private fun enqueueMockApiResponse(mockResponse: MockApiResponse) =
         enqueueMockResponse(code = mockResponse.code, fileName = mockResponse.filename)
 }
