@@ -5,6 +5,7 @@ import okhttp3.mockwebserver.MockWebServer
 import okhttp3.mockwebserver.RecordedRequest
 import org.junit.After
 import org.junit.Before
+import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import kotlin.time.Duration
 
@@ -43,12 +44,18 @@ open class MockWebServerTest {
         server.enqueue(mockResponse)
     }
 
-    fun takeRequest(timeout: Duration = DEFAULT_REQUEST_TIMEOUT): RecordedRequest =
+    fun takeRequest(timeout: Duration = DEFAULT_REQUEST_TIMEOUT): RecordedRequest? =
         server.takeRequest(timeout.inWholeMilliseconds, TimeUnit.MILLISECONDS)
 
     fun getAllRecordedRequests(timeout: Duration = DEFAULT_REQUEST_TIMEOUT): List<RecordedRequest> =
         (0 until server.requestCount).fold(emptyList()) { acc, _ ->
-            acc + takeRequest(timeout)
+            when (val request = takeRequest(timeout)) {
+                null -> {
+                    Timber.d("takeRequest was null, not adding...")
+                    acc
+                }
+                else -> acc + request
+            }
         }
 
     /**

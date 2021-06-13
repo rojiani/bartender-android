@@ -36,7 +36,6 @@ An Android app for finding cocktail recipes.
     layers. Why? Check out this great [Medium article](https://proandroiddev.com/the-real-repository-pattern-in-android-efba8662b754) 
     on DDD and the Repository pattern in Android.
 
-
 ### TheCocktailDB API
 
 See [TheCocktailDB API](https://www.thecocktaildb.com/api.php) page for resources. This project contains a [Postman Collection](https://www.postman.com/collection/) (v. 2.1) [here](config/dev/postman-api/TheCocktailDB-API.postman_collection.json).
@@ -46,3 +45,13 @@ See [TheCocktailDB API](https://www.thecocktaildb.com/api.php) page for resource
 App Icon/NavHeader:
 [Mojito Icon](https://www.flaticon.com/free-icon/mojito_2059994)
 <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+
+
+### Development
+
+| What                  | Version                     | Notes                                                                                                                             |
+| --------------------- | --------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| Android Studio        | Arctic Fox 2020.3.1 Beta 3+ | Using this for the [Apple Silicon](https://androidstudio.googleblog.com/2021/04/android-studio-arctic-fox-canary-15.html) support |
+| Android Gradle Plugin | 7.0.0-beta03                | Recommended with ^ AS version; StateFlow databinding support                                                                      |
+| Gradle                | 7.0.2                       |                                                                                                                                   |
+| JDK                   | 11                          | Bundled with Android Studio version above                                                                                         | 

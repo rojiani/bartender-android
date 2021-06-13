@@ -11,7 +11,7 @@ class NetworkModuleTest {
     fun provideOkHttpClient_logging_level_varies_by_buildconfig() {
         val okHttpClient = NetworkModule.provideOkHttpClient()
         val loggingInterceptor = okHttpClient
-            .networkInterceptors()
+            .networkInterceptors
             .filterIsInstance<HttpLoggingInterceptor>()
             .first()
         if (BuildConfig.DEBUG) {

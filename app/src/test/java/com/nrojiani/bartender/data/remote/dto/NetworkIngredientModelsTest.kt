@@ -48,7 +48,7 @@ class NetworkIngredientModelsTest {
             abv.shouldBe("40")
         }
 
-        val gin = networkGin?.toDomainModel()
+        val gin = networkGin.toDomainModel()
         gin.shouldNotBeNull()
             .apply {
                 id.shouldBe("2")
