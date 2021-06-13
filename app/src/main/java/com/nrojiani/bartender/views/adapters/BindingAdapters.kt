@@ -14,6 +14,7 @@ import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.nrojiani.bartender.R
 import com.nrojiani.bartender.data.Resource
 import com.nrojiani.bartender.data.domain.Drink
+import com.nrojiani.bartender.utils.connectivity.NetworkStatus
 import com.nrojiani.bartender.views.search.drinks.DrinkAdapter
 import timber.log.Timber
 
@@ -66,4 +67,20 @@ fun bindDrinksByNameSearchData(recyclerView: RecyclerView, data: List<Drink>?) {
     val adapter = recyclerView.adapter as DrinkAdapter
     Timber.d("submitList")
     adapter.submitList(data)
+}
+
+@BindingAdapter("visibleWhenOnline")
+fun bindVisibleWhenOnline(
+    view: View,
+    networkStatus: NetworkStatus?
+) {
+    view.isVisible = networkStatus != NetworkStatus.NOT_CONNECTED
+}
+
+@BindingAdapter("visibleWhenOffline")
+fun bindVisibleWhenOffline(
+    view: View,
+    networkStatus: NetworkStatus?
+) {
+    view.isVisible = networkStatus == NetworkStatus.NOT_CONNECTED
 }

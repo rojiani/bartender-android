@@ -5,6 +5,8 @@ import com.nrojiani.bartender.data.Resource
 import com.nrojiani.bartender.data.domain.Drink
 import com.nrojiani.bartender.data.domain.DrinkRef
 import com.nrojiani.bartender.data.repository.IDrinksRepository
+import com.nrojiani.bartender.utils.connectivity.NetworkStatus
+import com.nrojiani.bartender.utils.connectivity.NetworkStatusMonitor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
@@ -15,7 +17,8 @@ import javax.inject.Inject
 @Suppress("ForbiddenComment")
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    private val repository: IDrinksRepository
+    private val repository: IDrinksRepository,
+    networkStatusMonitor: NetworkStatusMonitor,
 ) : ViewModel() {
 
     private val _drinkNameText = MutableLiveData("")
@@ -30,12 +33,22 @@ class SearchViewModel @Inject constructor(
         it.dataOrNull ?: emptyList()
     }
 
-    private val inMemoryDrinkNameSearchCache: MutableMap<String, Resource<List<Drink>>> = LinkedHashMap()
+    val networkStatus: LiveData<NetworkStatus> =
+        networkStatusMonitor.networkEventsFlow
+            .onEach { status ->
+                Timber.d("[NetworkStatus] $status")
+                if (status == NetworkStatus.CONNECTED && drinkNameSearchResource.value !is Resource.Loading) {
+                    retrySearchByName()
+                }
+            }.asLiveData()
+
+    private val inMemoryDrinkNameSearchCache: MutableMap<String, List<Drink>> = LinkedHashMap()
 
     fun getDrinksWithName(drinkName: String) {
-        if (drinkName in inMemoryDrinkNameSearchCache) {
+        val cached = inMemoryDrinkNameSearchCache[drinkName]
+        if (cached != null) {
             Timber.d("$drinkName in cache")
-            _drinkNameSearchResource.value = inMemoryDrinkNameSearchCache[drinkName]
+            _drinkNameSearchResource.value = Resource.Success(cached)
             return
         }
 
@@ -49,13 +62,17 @@ class SearchViewModel @Inject constructor(
             }.onFailure { e ->
                 Timber.e(e, "Error fetching drinks")
                 _drinkNameSearchResource.value = Resource.Failure(e)
-                inMemoryDrinkNameSearchCache[drinkName] = Resource.Failure(e)
             }.onSuccess { matches ->
                 Timber.d("Found ${matches.size} matches")
+                inMemoryDrinkNameSearchCache[drinkName] = matches
                 _drinkNameSearchResource.value = Resource.Success(matches)
-                inMemoryDrinkNameSearchCache[drinkName] = Resource.Success(matches)
             }
         }
+    }
+
+    fun retrySearchByName() {
+        Timber.d("retrySearchByName")
+        getDrinksWithName(drinkNameText.value.orEmpty())
     }
 
     fun getRandomDrink() {
