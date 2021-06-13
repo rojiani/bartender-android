@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
@@ -11,84 +10,110 @@
             type="com.nrojiani.bartender.viewmodels.SearchViewModel" />
     </data>
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:context=".views.search.SearchFragment">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            tools:context=".views.search.SearchFragment">
 
-            <TextView
-                android:id="@+id/search_for_drink_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/default_margin"
-                android:text="@string/placeholder_search_fragment"
-                android:textAppearance="@style/TextAppearance.H2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/search_drink_by_name_text_input_layout"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/double_margin"
-                android:layout_marginTop="@dimen/default_margin"
-                android:layout_marginEnd="@dimen/double_margin"
-                android:hint="@string/drink_name_search_hint"
-                app:endIconMode="clear_text"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/search_for_drink_title">
+                android:layout_height="wrap_content">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/search_drink_by_name_text_input"
+                <TextView
+                    android:id="@+id/search_for_drink_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/default_margin"
+                    android:text="@string/placeholder_search_fragment"
+                    android:textAppearance="@style/TextAppearance.H2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/search_drink_by_name_text_input_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:onTextChanged="@{(s, start, before, count) -> searchViewModel.drinkNameTextChanged(s)}"
-                    android:singleLine="true"
-                    tools:text="gin and tonic" />
+                    android:layout_marginStart="@dimen/double_margin"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:layout_marginEnd="@dimen/double_margin"
+                    android:hint="@string/drink_name_search_hint"
+                    app:endIconMode="clear_text"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/search_for_drink_title"
+                    app:visibleWhenOnline="@{searchViewModel.networkStatus}">
 
-                <Button
-                    android:id="@+id/search_by_drink_name_button"
+                    <Button
+                        android:id="@+id/search_by_drink_name_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="@{() -> searchViewModel.getDrinksWithName(searchViewModel.drinkNameText)}"
+                        android:text="@string/search_button_label" />
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/search_drink_by_name_text_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onTextChanged="@{(s, start, before, count) -> searchViewModel.drinkNameTextChanged(s)}"
+                        android:singleLine="true"
+                        tools:text="gin and tonic" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/drink_search_results_list"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="@{() -> searchViewModel.getDrinksWithName(searchViewModel.drinkNameText)}"
-                    android:text="@string/search_button_label" />
+                    android:layout_height="0dp"
+                    android:layout_marginTop="@dimen/default_margin"
+                    app:drinksByNameSearchData="@{searchViewModel.drinksByNameSearchResults}"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/search_drink_by_name_text_input_layout"
+                    app:visibleWhenOnline="@{searchViewModel.networkStatus}"
+                    tools:listitem="@layout/drink_item_view">
 
-            </com.google.android.material.textfield.TextInputLayout>
+                </androidx.recyclerview.widget.RecyclerView>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/drink_search_results_list"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginTop="@dimen/default_margin"
-                app:drinksByNameSearchData="@{searchViewModel.drinksByNameSearchResults}"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/search_drink_by_name_text_input_layout"
-                tools:listitem="@layout/drink_item_view">
+                <!-- Temporary button for navigation -->
+                <!--            <Button-->
+                <!--                android:id="@+id/temporary_random_drink_button"-->
+                <!--                android:layout_width="wrap_content"-->
+                <!--                android:layout_height="wrap_content"-->
+                <!--                android:layout_marginTop="@dimen/default_margin"-->
+                <!--                android:onClick="@{() -> searchViewModel.getRandomDrink()}"-->
+                <!--                android:text="@string/get_random_drink_button_label"-->
+                <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+                <!--                app:layout_constraintEnd_toEndOf="parent"-->
+                <!--                app:layout_constraintStart_toStartOf="parent"-->
+                <!--                app:layout_constraintTop_toBottomOf="@id/drink_search_results_list" />-->
 
-            </androidx.recyclerview.widget.RecyclerView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
 
-            <!-- Temporary button for navigation -->
-            <!--            <Button-->
-            <!--                android:id="@+id/temporary_random_drink_button"-->
-            <!--                android:layout_width="wrap_content"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_marginTop="@dimen/default_margin"-->
-            <!--                android:onClick="@{() -> searchViewModel.getRandomDrink()}"-->
-            <!--                android:text="@string/get_random_drink_button_label"-->
-            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--                app:layout_constraintEnd_toEndOf="parent"-->
-            <!--                app:layout_constraintStart_toStartOf="parent"-->
-            <!--                app:layout_constraintTop_toBottomOf="@id/drink_search_results_list" />-->
+        <TextView
+            android:id="@+id/networkAlert"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/cardview_dark_background"
+            android:drawablePadding="16dp"
+            android:padding="@dimen/default_margin"
+            android:text="@string/no_connection_error_message"
+            android:textColor="@color/white"
+            app:drawableStartCompat="@drawable/ic_baseline_cloud_off_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:visibleWhenOffline="@{searchViewModel.networkStatus}" />
 
+    </RelativeLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
 </layout>
