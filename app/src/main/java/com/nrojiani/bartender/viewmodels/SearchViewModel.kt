@@ -8,8 +8,10 @@ import com.nrojiani.bartender.data.repository.IDrinksRepository
 import com.nrojiani.bartender.utils.connectivity.NetworkStatus
 import com.nrojiani.bartender.utils.connectivity.NetworkStatusMonitor
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -33,14 +35,18 @@ class SearchViewModel @Inject constructor(
         it.dataOrNull ?: emptyList()
     }
 
-    val networkStatus: LiveData<NetworkStatus> =
+    val networkStatus: StateFlow<NetworkStatus> =
         networkStatusMonitor.networkEventsFlow
             .onEach { status ->
                 Timber.d("[NetworkStatus] $status")
                 if (status == NetworkStatus.CONNECTED && drinkNameSearchResource.value !is Resource.Loading) {
                     retrySearchByName()
                 }
-            }.asLiveData()
+            }.stateIn(
+                scope = viewModelScope,
+                started = WhileSubscribed(5000),
+                initialValue = NetworkStatus.UNDETERMINED
+            )
 
     private val inMemoryDrinkNameSearchCache: MutableMap<String, List<Drink>> = LinkedHashMap()
 
