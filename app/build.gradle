@@ -56,7 +56,10 @@ android {
     lintOptions {
         // Throws NullPointerException while linting...
         // no DialogFragments are used in this project
-        disable "DialogFragmentCallbacksDetector"
+        disable 'DialogFragmentCallbacksDetector'
+
+        // https://github.com/JakeWharton/timber/issues/408
+        disable 'WrongTimberUsageDetector'
     }
 
     testOptions {
