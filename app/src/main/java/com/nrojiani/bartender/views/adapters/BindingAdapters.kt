@@ -63,7 +63,7 @@ fun <T> bindLoadingIndicator(
 }
 
 @BindingAdapter("drinksByNameSearchData")
-fun bindDrinksByNameSearchData(recyclerView: RecyclerView, data: List<Drink>?) {
+fun bindDrinksByNameSearchData(recyclerView: RecyclerView, data: List<Drink>) {
     val adapter = recyclerView.adapter as DrinkAdapter
     Timber.d("submitList")
     adapter.submitList(data)
@@ -72,7 +72,7 @@ fun bindDrinksByNameSearchData(recyclerView: RecyclerView, data: List<Drink>?) {
 @BindingAdapter("visibleWhenOnline")
 fun bindVisibleWhenOnline(
     view: View,
-    networkStatus: NetworkStatus?
+    networkStatus: NetworkStatus
 ) {
     view.isVisible = networkStatus != NetworkStatus.NOT_CONNECTED
 }
@@ -80,7 +80,7 @@ fun bindVisibleWhenOnline(
 @BindingAdapter("visibleWhenOffline")
 fun bindVisibleWhenOffline(
     view: View,
-    networkStatus: NetworkStatus?
+    networkStatus: NetworkStatus
 ) {
     view.isVisible = networkStatus == NetworkStatus.NOT_CONNECTED
 }
