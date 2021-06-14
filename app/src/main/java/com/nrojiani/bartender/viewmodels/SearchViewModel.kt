@@ -1,18 +1,26 @@
 package com.nrojiani.bartender.viewmodels
 
-import androidx.lifecycle.*
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.nrojiani.bartender.data.Resource
 import com.nrojiani.bartender.data.domain.Drink
 import com.nrojiani.bartender.data.domain.DrinkRef
 import com.nrojiani.bartender.data.repository.IDrinksRepository
 import com.nrojiani.bartender.utils.connectivity.NetworkStatus
 import com.nrojiani.bartender.utils.connectivity.NetworkStatusMonitor
+import com.nrojiani.bartender.utils.flow.FLOW_STOP_TIMEOUT_MS
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
+import kotlin.collections.LinkedHashMap
+import kotlin.collections.List
+import kotlin.collections.MutableMap
+import kotlin.collections.emptyList
+import kotlin.collections.set
 
 @Suppress("ForbiddenComment")
 @HiltViewModel
@@ -21,30 +29,39 @@ class SearchViewModel @Inject constructor(
     networkStatusMonitor: NetworkStatusMonitor,
 ) : ViewModel() {
 
-    private val _drinkNameText = MutableLiveData("")
-    val drinkNameText: LiveData<String>
-        get() = _drinkNameText
+    private var currentDrinkNameQuery = ""
 
-    private val _drinkNameSearchResource = MutableLiveData<Resource<List<Drink>>>()
-    val drinkNameSearchResource: LiveData<Resource<List<Drink>>>
+    private val _drinkNameSearchResource = MutableStateFlow<Resource<List<Drink>>>(Resource.Loading)
+    val drinkNameSearchResource: StateFlow<Resource<List<Drink>>>
         get() = _drinkNameSearchResource
 
-    val drinksByNameSearchResults: LiveData<List<Drink>> = drinkNameSearchResource.map {
+    val drinksByNameSearchResults: StateFlow<List<Drink>> = drinkNameSearchResource.mapLatest {
         it.dataOrNull ?: emptyList()
-    }
+    }.stateIn(
+        scope = viewModelScope,
+        started = WhileSubscribed(FLOW_STOP_TIMEOUT_MS),
+        initialValue = emptyList()
+    )
 
-    val networkStatus: LiveData<NetworkStatus> =
+    val networkStatus: StateFlow<NetworkStatus> =
         networkStatusMonitor.networkEventsFlow
             .onEach { status ->
                 Timber.d("[NetworkStatus] $status")
                 if (status == NetworkStatus.CONNECTED && drinkNameSearchResource.value !is Resource.Loading) {
-                    retrySearchByName()
+                    searchForDrinksByName()
                 }
-            }.asLiveData()
+            }.stateIn(
+                scope = viewModelScope,
+                started = WhileSubscribed(FLOW_STOP_TIMEOUT_MS),
+                initialValue = NetworkStatus.UNDETERMINED
+            )
 
     private val inMemoryDrinkNameSearchCache: MutableMap<String, List<Drink>> = LinkedHashMap()
 
-    fun getDrinksWithName(drinkName: String) {
+    fun searchForDrinksByName() {
+        val drinkName = currentDrinkNameQuery
+        Timber.d("searchForDrinksByName($drinkName)")
+
         val cached = inMemoryDrinkNameSearchCache[drinkName]
         if (cached != null) {
             Timber.d("$drinkName in cache")
@@ -52,11 +69,9 @@ class SearchViewModel @Inject constructor(
             return
         }
 
+        _drinkNameSearchResource.value = Resource.Loading
+
         viewModelScope.launch {
-            Timber.d("getDrinksWithName($drinkName)")
-
-            _drinkNameSearchResource.value = Resource.Loading
-
             kotlin.runCatching {
                 repository.getDrinksByName(drinkName)
             }.onFailure { e ->
@@ -68,11 +83,6 @@ class SearchViewModel @Inject constructor(
                 _drinkNameSearchResource.value = Resource.Success(matches)
             }
         }
-    }
-
-    fun retrySearchByName() {
-        Timber.d("retrySearchByName")
-        getDrinksWithName(drinkNameText.value.orEmpty())
     }
 
     fun getRandomDrink() {
@@ -90,8 +100,9 @@ class SearchViewModel @Inject constructor(
         }
     }
 
-    fun drinkNameTextChanged(newValue: CharSequence) {
-        _drinkNameText.value = newValue.trim().toString()
+    fun drinkQueryTextChanged(newValue: CharSequence) {
+        currentDrinkNameQuery = newValue.trim().toString()
+        searchForDrinksByName()
     }
 
     sealed class Event {

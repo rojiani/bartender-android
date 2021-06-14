@@ -20,6 +20,8 @@ class NetworkStatusMonitor @Inject constructor(context: Context) {
         context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
     val networkEventsFlow: Flow<NetworkStatus> = callbackFlow {
+        Timber.d("[NetworkStatusMonitor] callbackFlow started")
+
         trySend(NetworkStatus.UNDETERMINED)
 
         val initial = when {

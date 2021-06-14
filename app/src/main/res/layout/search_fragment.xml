@@ -53,14 +53,14 @@
                         android:id="@+id/search_by_drink_name_button"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:onClick="@{() -> searchViewModel.getDrinksWithName(searchViewModel.drinkNameText)}"
+                        android:onClick="@{() -> searchViewModel.searchForDrinksByName()}"
                         android:text="@string/search_button_label" />
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/search_drink_by_name_text_input"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:onTextChanged="@{(s, start, before, count) -> searchViewModel.drinkNameTextChanged(s)}"
+                        android:onTextChanged="@{(s, start, before, count) -> searchViewModel.drinkQueryTextChanged(s)}"
                         android:singleLine="true"
                         tools:text="gin and tonic" />
 
