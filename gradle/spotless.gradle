@@ -9,27 +9,13 @@ apply plugin: 'groovy'
 
 spotless {
     groovyGradle {
-        target fileTree(rootDir) {
-            include "**/*.gradle"
-        }
+        target "**/*.gradle"
         greclipse()
         indentWithSpaces()
     }
 
-    java {
-        target fileTree(rootDir) {
-            include '**/*.java'
-            exclude "**/build/*"
-        }
-
-        googleJavaFormat().aosp()
-    }
-
     kotlin {
-        target fileTree(rootDir) {
-            include '**/*.kt'
-            exclude '**/build/*'
-        }
+        target "**/*.kt"
 
         ktlint(rootProject.ktlint_version)
                 .userData([
