@@ -2,11 +2,8 @@ package com.nrojiani.bartender.data.remote.dto
 
 import com.nrojiani.bartender.data.domain.IbaCategory
 import com.nrojiani.bartender.data.domain.IngredientMeasure
-import com.nrojiani.bartender.data.test.utils.NETWORK_MOCKS_PATH
-import com.nrojiani.bartender.data.test.utils.readMockJson
-import com.nrojiani.bartender.data.test.utils.readMockSearchByDrinkNameJson
+import com.nrojiani.bartender.data.test.utils.fromMockJson
 import com.nrojiani.bartender.di.NetworkModule
-import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldHaveSize
@@ -18,7 +15,6 @@ import net.lachlanmckee.timberjunit.TimberTestRule
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import java.nio.file.Paths
 
 class NetworkDrinkModelsTest {
     private lateinit var moshi: Moshi
@@ -33,8 +29,8 @@ class NetworkDrinkModelsTest {
 
     @Test
     fun test_NetworkDrink_deserialization() {
-        val adapter: JsonAdapter<NetworkDrink> = moshi.adapter(NetworkDrink::class.java)
-        val networkDrink: NetworkDrink? = adapter.fromJson(NETWORK_DRINK_JSON)
+        val networkDrink = fromMockJson<NetworkDrink>(mocksRelativePath = "cocktail/gin-and-tonic.json")
+
         networkDrink.shouldNotBeNull()
             .apply {
                 id.shouldBe("11403")
@@ -60,10 +56,9 @@ class NetworkDrinkModelsTest {
 
     @Test
     fun test_NetworkDrink_toDomainModel() {
-        val adapter: JsonAdapter<NetworkDrinksContainer> =
-            moshi.adapter(NetworkDrinksContainer::class.java)
-        val networkDrinkResultsJson: String = readMockSearchByDrinkNameJson("gin-and-tonic.json")
-        val networkDrinkResults = adapter.fromJson(networkDrinkResultsJson)
+        val networkDrinkResults = fromMockJson<NetworkDrinksContainer>(
+            mocksRelativePath = "search/name/gin-and-tonic.json"
+        )
 
         networkDrinkResults.shouldNotBeNull()
         networkDrinkResults.drinks?.shouldHaveSize(1)
@@ -94,10 +89,9 @@ class NetworkDrinkModelsTest {
 
     @Test
     fun no_search_matches() {
-        val adapter: JsonAdapter<NetworkDrinksContainer> =
-            moshi.adapter(NetworkDrinksContainer::class.java)
-        val networkNoDrinksJson = readMockSearchByDrinkNameJson("no-matches.json")
-        val networkDrinkResults = adapter.fromJson(networkNoDrinksJson)
+        val networkDrinkResults = fromMockJson<NetworkDrinksContainer>(
+            mocksRelativePath = "search/name/no-matches.json"
+        )
 
         networkDrinkResults.shouldNotBeNull()
         networkDrinkResults.drinks?.shouldBeEmpty()
@@ -110,12 +104,9 @@ class NetworkDrinkModelsTest {
 
     @Test
     fun network_drink_refs() {
-        val adapter: JsonAdapter<NetworkDrinkRefsContainer> =
-            moshi.adapter(NetworkDrinkRefsContainer::class.java)
-        val networkDrinkRefsJson: String = readMockJson(
-            Paths.get("$NETWORK_MOCKS_PATH/filter/ingredient/gin-drinks.json")
+        val networkDrinkRefs = fromMockJson<NetworkDrinkRefsContainer>(
+            mocksRelativePath = "filter/ingredient/gin-drinks.json"
         )
-        val networkDrinkRefs = adapter.fromJson(networkDrinkRefsJson)
 
         networkDrinkRefs.shouldNotBeNull()
         networkDrinkRefs.drinks?.shouldHaveSize(100)
@@ -125,11 +116,5 @@ class NetworkDrinkModelsTest {
         ginAndTonicRef.shouldNotBeNull()
         ginAndTonicRef.id.shouldBe("11403")
         ginAndTonicRef.imageUrl.shouldBe("https://www.thecocktaildb.com/images/media/drink/z0omyp1582480573.jpg")
-    }
-
-    companion object {
-        private val NETWORK_DRINK_JSON = readMockJson(
-            NETWORK_MOCKS_PATH.resolve("cocktail/gin-and-tonic.json")
-        )
     }
 }

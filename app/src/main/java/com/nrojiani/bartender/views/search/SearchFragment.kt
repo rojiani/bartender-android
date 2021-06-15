@@ -10,12 +10,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ListAdapter
 import com.nrojiani.bartender.R
-import com.nrojiani.bartender.data.Resource
 import com.nrojiani.bartender.data.domain.Drink
 import com.nrojiani.bartender.databinding.SearchFragmentBinding
 import com.nrojiani.bartender.viewmodels.SearchViewModel
@@ -53,24 +51,8 @@ class SearchFragment : Fragment() {
         binding.drinkSearchResultsList.adapter = adapter
 
         consumeEvents()
-        observeViewModel()
 
         return binding.root
-    }
-
-    private fun observeViewModel() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.drinkNameSearchResource.collect {
-                    val state = when (it) {
-                        is Resource.Success -> "Success"
-                        is Resource.Failure -> "Failure"
-                        is Resource.Loading -> "Loading"
-                    }
-                    Timber.d("[drinkNameSearchResource]: $state")
-                }
-            }
-        }
     }
 
     private fun consumeEvents() {

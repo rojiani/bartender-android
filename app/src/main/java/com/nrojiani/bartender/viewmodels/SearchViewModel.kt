@@ -22,7 +22,6 @@ import kotlin.collections.MutableMap
 import kotlin.collections.emptyList
 import kotlin.collections.set
 
-@Suppress("ForbiddenComment")
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     private val repository: IDrinksRepository,

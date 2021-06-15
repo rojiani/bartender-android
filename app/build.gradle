@@ -154,4 +154,5 @@ dependencies {
     kaptAndroidTest "com.google.dagger:hilt-android-compiler:$hilt_version"
 }
 
-apply from: "${gradleScriptsDir}/jacoco-android-app.gradle"
+// Need to fix JaCoCo exception while running tests...
+// apply from: "${gradleScriptsDir}/jacoco-android-app.gradle"
