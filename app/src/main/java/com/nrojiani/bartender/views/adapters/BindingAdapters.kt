@@ -14,9 +14,10 @@ import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.nrojiani.bartender.R
 import com.nrojiani.bartender.data.Resource
 import com.nrojiani.bartender.data.domain.Drink
+import com.nrojiani.bartender.data.domain.IngredientMeasure
 import com.nrojiani.bartender.utils.connectivity.NetworkStatus
+import com.nrojiani.bartender.views.drink.ingredients.IngredientMeasureAdapter
 import com.nrojiani.bartender.views.search.drinks.DrinkAdapter
-import timber.log.Timber
 
 @BindingAdapter("imageUrl")
 fun loadImage(imageView: ImageView, url: String) {
@@ -34,9 +35,8 @@ fun loadImage(imageView: ImageView, url: String) {
  * VISIBLE only if Resource.Success, else GONE
  */
 @BindingAdapter("visibleOnSuccess")
-fun <T> bindVisibleOnSuccess(view: View, resource: Resource<T>?) {
+fun <T> bindVisibleOnSuccess(view: View, resource: Resource<T>) {
     view.visibility = when {
-        resource == null -> View.GONE
         resource.isSuccess -> View.VISIBLE
         else -> View.GONE
     }
@@ -62,10 +62,15 @@ fun <T> bindLoadingIndicator(
     progressIndicator.isVisible = resource?.isLoading ?: false
 }
 
+@BindingAdapter("ingredientsListData")
+fun bindIngredientsListData(recyclerView: RecyclerView, data: List<IngredientMeasure>) {
+    val adapter = recyclerView.adapter as IngredientMeasureAdapter
+    adapter.submitList(data)
+}
+
 @BindingAdapter("drinksByNameSearchData")
-fun bindDrinksByNameSearchData(recyclerView: RecyclerView, data: List<Drink>) {
+fun <T> bindDrinksByNameSearchData(recyclerView: RecyclerView, data: List<Drink>) {
     val adapter = recyclerView.adapter as DrinkAdapter
-    Timber.d("submitList")
     adapter.submitList(data)
 }
 

@@ -57,9 +57,6 @@ android {
         // Throws NullPointerException while linting...
         // no DialogFragments are used in this project
         disable 'DialogFragmentCallbacksDetector'
-
-        // https://github.com/JakeWharton/timber/issues/408
-        disable 'WrongTimberUsageDetector'
     }
 
     testOptions {
@@ -72,12 +69,15 @@ android {
 
     android {
         sourceSets {
-            String sharedTestDir = 'src/sharedTest/java'
+            def sharedTestSrcDir = 'src/sharedTest/java'
+            def sharedTestResourcesDir = 'src/sharedTest/resources'
             test {
-                java.srcDirs += sharedTestDir
+                java.srcDirs += sharedTestSrcDir
+                resources.srcDirs += sharedTestResourcesDir
             }
             androidTest {
-                java.srcDirs += sharedTestDir
+                java.srcDirs += sharedTestSrcDir
+                resources.srcDirs += sharedTestResourcesDir
             }
         }
     }

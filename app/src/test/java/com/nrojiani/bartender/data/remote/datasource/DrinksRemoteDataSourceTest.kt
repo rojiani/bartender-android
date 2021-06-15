@@ -3,7 +3,7 @@ package com.nrojiani.bartender.data.remote.datasource
 import com.nrojiani.bartender.data.remote.dto.NetworkDrinksContainer
 import com.nrojiani.bartender.data.remote.dto.toDomainModel
 import com.nrojiani.bartender.data.remote.webservice.CocktailsService
-import com.nrojiani.bartender.data.test.utils.fromMockJson
+import com.nrojiani.bartender.test.utils.mocks.fromMockJson
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
