@@ -1,7 +1,7 @@
 package com.nrojiani.bartender.data.remote.dto
 
-import com.nrojiani.bartender.data.test.utils.fromMockJson
 import com.nrojiani.bartender.di.NetworkModule
+import com.nrojiani.bartender.test.utils.mocks.fromMockJson
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import io.kotest.matchers.booleans.shouldBeTrue

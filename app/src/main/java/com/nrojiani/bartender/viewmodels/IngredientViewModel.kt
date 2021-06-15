@@ -5,7 +5,6 @@ import com.nrojiani.bartender.data.Resource
 import com.nrojiani.bartender.data.domain.ImageSize
 import com.nrojiani.bartender.data.domain.Ingredient
 import com.nrojiani.bartender.data.repository.IDrinksRepository
-import com.nrojiani.bartender.utils.viewmodel.navArgs
 import com.nrojiani.bartender.views.ingredient.IngredientFragmentArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
@@ -21,11 +20,7 @@ class IngredientViewModel @Inject constructor(
     private val repository: IDrinksRepository
 ) : ViewModel() {
 
-    /**
-     * Workaround for Hilt not playing nicely with SafeArgs.
-     * @see [navArgs]
-     */
-    private val fragmentArgs: IngredientFragmentArgs by savedStateHandle.navArgs()
+    private val fragmentArgs = IngredientFragmentArgs.fromSavedStateHandle(savedStateHandle)
 
     private val name: String = fragmentArgs.ingredientName
 

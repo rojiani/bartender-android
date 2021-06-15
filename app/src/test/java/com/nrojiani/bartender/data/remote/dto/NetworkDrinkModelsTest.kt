@@ -2,8 +2,8 @@ package com.nrojiani.bartender.data.remote.dto
 
 import com.nrojiani.bartender.data.domain.IbaCategory
 import com.nrojiani.bartender.data.domain.IngredientMeasure
-import com.nrojiani.bartender.data.test.utils.fromMockJson
 import com.nrojiani.bartender.di.NetworkModule
+import com.nrojiani.bartender.test.utils.mocks.fromMockJson
 import com.squareup.moshi.Moshi
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldHaveSize

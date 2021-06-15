@@ -9,11 +9,11 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.nrojiani.bartender.R
-import com.nrojiani.bartender.data.domain.DrinkRef
 import com.nrojiani.bartender.data.domain.IngredientMeasure
 import com.nrojiani.bartender.test.utils.espresso.BaseRobot
 import com.nrojiani.bartender.test.utils.espresso.hasItemCount
 import com.nrojiani.bartender.test.utils.espresso.withRecyclerView
+import com.nrojiani.bartender.test.utils.mocks.DrinkRefs
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import io.mockk.mockk
@@ -119,12 +119,6 @@ class DrinkFragmentTest {
     }
 
     companion object {
-        private val BLUEBERRY_MOJITO_DRINK_REF = DrinkRef(
-            id = "178336",
-            imageUrl = "https://www.thecocktaildb.com/images/media/drink/07iep51598719977.jpg",
-            drinkName = "Blueberry Mojito"
-        )
-
-        private val FRAGMENT_ARGS = bundleOf("drinkRef" to BLUEBERRY_MOJITO_DRINK_REF)
+        private val FRAGMENT_ARGS = bundleOf("drinkRef" to DrinkRefs.BLUEBERRY_MOJITO_DRINK_REF)
     }
 }

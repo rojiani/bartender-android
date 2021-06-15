@@ -7,8 +7,8 @@ import com.nrojiani.bartender.data.domain.Drink
 import com.nrojiani.bartender.data.remote.dto.NetworkDrinksContainer
 import com.nrojiani.bartender.data.remote.dto.toDomainModel
 import com.nrojiani.bartender.data.repository.IDrinksRepository
-import com.nrojiani.bartender.data.test.utils.fromMockJson
 import com.nrojiani.bartender.test.utils.MainCoroutineScopeRule
+import com.nrojiani.bartender.test.utils.mocks.fromMockJson
 import com.nrojiani.bartender.utils.connectivity.NetworkStatus
 import com.nrojiani.bartender.utils.connectivity.NetworkStatusMonitor
 import io.kotest.matchers.collections.shouldHaveSize

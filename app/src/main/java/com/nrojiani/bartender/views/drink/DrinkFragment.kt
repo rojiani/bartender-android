@@ -56,15 +56,8 @@ class DrinkFragment : Fragment() {
         binding.ingredientsList.adapter = adapter
 
         consumeEvents()
-        subscribeUi(adapter = adapter)
 
         return binding.root
-    }
-
-    private fun subscribeUi(adapter: ListAdapter<IngredientMeasure, IngredientMeasureAdapter.ViewHolder>) {
-        viewModel.ingredientMeasures.observe(viewLifecycleOwner) { measures ->
-            adapter.submitList(measures)
-        }
     }
 
     private fun consumeEvents() {

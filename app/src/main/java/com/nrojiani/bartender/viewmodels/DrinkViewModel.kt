@@ -6,7 +6,7 @@ import com.nrojiani.bartender.data.domain.Drink
 import com.nrojiani.bartender.data.domain.DrinkRef
 import com.nrojiani.bartender.data.domain.IngredientMeasure
 import com.nrojiani.bartender.data.repository.IDrinksRepository
-import com.nrojiani.bartender.utils.viewmodel.navArgs
+import com.nrojiani.bartender.utils.flow.FLOW_STOP_TIMEOUT_MS
 import com.nrojiani.bartender.views.drink.DrinkFragmentArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -21,26 +21,19 @@ class DrinkViewModel @Inject constructor(
     private val repository: IDrinksRepository
 ) : ViewModel() {
 
-    /**
-     * Workaround for Hilt not playing nicely with SafeArgs.
-     * @see [navArgs]
-     */
-    private val fragmentArgs: DrinkFragmentArgs by savedStateHandle.navArgs()
+    private val fragmentArgs = DrinkFragmentArgs.fromSavedStateHandle(savedStateHandle)
 
-    val drinkRef: LiveData<DrinkRef> = liveData {
-        emit(fragmentArgs.drinkRef)
-    }
+    val drinkRef: DrinkRef = fragmentArgs.drinkRef ?: DEFAULT_DRINK_REF
 
-    private val drinkId = fragmentArgs.drinkRef.id
+    val drinkResource: StateFlow<Resource<Drink>> = flow {
+        Timber.d("drink flow (${drinkRef.id})")
 
-    // Use with databinding once stable
-    private val drinkFlow: StateFlow<Resource<Drink>> = flow {
-        Timber.d("drink flow ($drinkId)")
+        // TODO coroutine handling
         kotlin.runCatching {
-            repository.lookupDrinkDetails(drinkId)
+            repository.lookupDrinkDetails(drinkRef.id)
         }.mapCatching {
             when (it) {
-                null -> throw NoSuchElementException("Drink with id $drinkId not found on server")
+                null -> throw NoSuchElementException("Drink with id ${drinkRef.id} not found on server")
                 else -> it
             }
         }.onSuccess {
@@ -50,26 +43,36 @@ class DrinkViewModel @Inject constructor(
         }
     }.stateIn(
         scope = viewModelScope,
-        started = SharingStarted.Lazily,
+        started = SharingStarted.Eagerly,
         initialValue = Resource.Loading
     )
 
-    val drinkResource: LiveData<Resource<Drink>> = drinkFlow.asLiveData()
+    val ingredientMeasures: StateFlow<List<IngredientMeasure>> = drinkResource.mapLatest {
+        it.dataOrNull?.ingredientMeasures
+    }.filterNotNull()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(FLOW_STOP_TIMEOUT_MS),
+            initialValue = emptyList()
+        )
 
-    val ingredientMeasures: LiveData<List<IngredientMeasure>> = drinkResource.map {
-        when (it) {
-            is Resource.Success<Drink> -> it.data.ingredientMeasures
-            else -> emptyList()
-        }
-    }
+    val glass: StateFlow<String> = drinkResource.mapLatest {
+        it.dataOrNull?.glass
+    }.filterNotNull()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(FLOW_STOP_TIMEOUT_MS),
+            initialValue = ""
+        )
 
-    val glass: LiveData<String> = drinkResource.map {
-        it.dataOrNull?.glass ?: ""
-    }
-
-    val instructions: LiveData<String> = drinkResource.map {
-        it.dataOrNull?.instructions ?: ""
-    }
+    val instructions: StateFlow<String> = drinkResource.mapLatest {
+        it.dataOrNull?.instructions
+    }.filterNotNull()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(FLOW_STOP_TIMEOUT_MS),
+            initialValue = ""
+        )
 
     fun displayIngredient(ingredientName: String) {
         viewModelScope.launch {
@@ -93,4 +96,15 @@ class DrinkViewModel @Inject constructor(
      * one-time events (e.g., Navigation events, notifications, etc.)
      */
     val eventsFlow: Flow<Event> = eventChannel.receiveAsFlow()
+
+    companion object {
+        /**
+         * Solely to enable unit testing of ViewModel.
+         */
+        private val DEFAULT_DRINK_REF = DrinkRef(
+            id = "178336",
+            imageUrl = "https://www.thecocktaildb.com/images/media/drink/07iep51598719977.jpg",
+            drinkName = "Blueberry Mojito"
+        )
+    }
 }
