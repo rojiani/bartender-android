@@ -1,7 +1,6 @@
 package com.nrojiani.bartender.data.remote.dto
 
-import com.nrojiani.bartender.data.test.utils.NETWORK_MOCKS_PATH
-import com.nrojiani.bartender.data.test.utils.readMockJson
+import com.nrojiani.bartender.data.test.utils.fromMockJson
 import com.nrojiani.bartender.di.NetworkModule
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
@@ -14,7 +13,6 @@ import net.lachlanmckee.timberjunit.TimberTestRule
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import java.nio.file.Paths
 
 class NetworkIngredientModelsTest {
 
@@ -30,12 +28,9 @@ class NetworkIngredientModelsTest {
 
     @Test
     fun network_ingredients_container() {
-        val adapter: JsonAdapter<NetworkIngredientsContainer> =
-            moshi.adapter(NetworkIngredientsContainer::class.java)
-
-        val networkIngredientsJson: String = readIngredientByNameMockJson("gin.json")
-        val networkIngredientsContainer = adapter.fromJson(networkIngredientsJson)
-
+        val networkIngredientsContainer = fromMockJson<NetworkIngredientsContainer>(
+            mocksRelativePath = "ingredients/gin.json"
+        )
         networkIngredientsContainer.shouldNotBeNull()
         networkIngredientsContainer.ingredients?.shouldHaveSize(1)
         val networkGin = networkIngredientsContainer.ingredients?.first()
@@ -75,7 +70,4 @@ class NetworkIngredientModelsTest {
             .shouldNotBeNull()
             .shouldBeEmpty()
     }
-
-    private fun readIngredientByNameMockJson(mockFilename: String): String =
-        readMockJson(Paths.get("$NETWORK_MOCKS_PATH/ingredients/$mockFilename"))
 }
