@@ -2,5 +2,6 @@
 <SmellBaseline>
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
+    <ID>ForbiddenComment:SearchViewModel.kt$SearchViewModel$// TODO: Use Paging library. https://developer.android.com/topic/libraries/architecture/paging/v3-overview</ID>
   </CurrentIssues>
 </SmellBaseline>

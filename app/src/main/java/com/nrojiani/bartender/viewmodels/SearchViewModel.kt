@@ -35,7 +35,7 @@ class SearchViewModel @Inject constructor(
         get() = _drinkNameSearchResource
 
     val drinksByNameSearchResults: StateFlow<List<Drink>> = drinkNameSearchResource.mapLatest {
-        it.dataOrNull ?: emptyList()
+        it.dataOrNull() ?: emptyList()
     }.stateIn(
         scope = viewModelScope,
         started = WhileSubscribed(FLOW_STOP_TIMEOUT_MS),
@@ -55,6 +55,7 @@ class SearchViewModel @Inject constructor(
                 initialValue = NetworkStatus.UNDETERMINED
             )
 
+    // TODO: Use Paging library. https://developer.android.com/topic/libraries/architecture/paging/v3-overview
     private val inMemoryDrinkNameSearchCache: MutableMap<String, List<Drink>> = LinkedHashMap()
 
     fun searchForDrinksByName() {

@@ -125,7 +125,7 @@ class SearchViewModelTest {
             val drinkSearchResource: Resource<List<Drink>> = expectItem()
             drinkSearchResource.apply {
                 shouldBe(Resource.Success(EMPTY_STRING_DRINKS_RESULTS))
-                dataOrNull?.shouldHaveSize(6)
+                dataOrNull()?.shouldHaveSize(6)
             }
 
             // when search text changes, results updated
@@ -149,7 +149,7 @@ class SearchViewModelTest {
 
             searchViewModel.drinkQueryTextChanged("gin and toni")
             expectItem().shouldBe(Resource.Loading)
-            expectItem().dataOrNull.shouldNotBeNull()
+            expectItem().dataOrNull().shouldNotBeNull()
 
             searchViewModel.drinkQueryTextChanged("gin and tonic")
             // no loading...

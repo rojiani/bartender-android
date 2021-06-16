@@ -47,32 +47,29 @@ class DrinkViewModel @Inject constructor(
         initialValue = Resource.Loading
     )
 
-    val ingredientMeasures: StateFlow<List<IngredientMeasure>> = drinkResource.mapLatest {
-        it.dataOrNull?.ingredientMeasures
-    }.filterNotNull()
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(FLOW_STOP_TIMEOUT_MS),
-            initialValue = emptyList()
-        )
+    val ingredientMeasures: StateFlow<List<IngredientMeasure>> = drinkResource.mapNotNull {
+        it.dataOrNull()?.ingredientMeasures
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(FLOW_STOP_TIMEOUT_MS),
+        initialValue = emptyList()
+    )
 
-    val glass: StateFlow<String> = drinkResource.mapLatest {
-        it.dataOrNull?.glass
-    }.filterNotNull()
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(FLOW_STOP_TIMEOUT_MS),
-            initialValue = ""
-        )
+    val glass: StateFlow<String> = drinkResource.mapNotNull {
+        it.dataOrNull()?.glass
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(FLOW_STOP_TIMEOUT_MS),
+        initialValue = ""
+    )
 
-    val instructions: StateFlow<String> = drinkResource.mapLatest {
-        it.dataOrNull?.instructions
-    }.filterNotNull()
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(FLOW_STOP_TIMEOUT_MS),
-            initialValue = ""
-        )
+    val instructions: StateFlow<String> = drinkResource.mapNotNull {
+        it.dataOrNull()?.instructions
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(FLOW_STOP_TIMEOUT_MS),
+        initialValue = ""
+    )
 
     fun displayIngredient(ingredientName: String) {
         viewModelScope.launch {

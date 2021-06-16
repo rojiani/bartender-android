@@ -7,10 +7,7 @@ import com.nrojiani.bartender.data.domain.Ingredient
 import com.nrojiani.bartender.data.repository.IDrinksRepository
 import com.nrojiani.bartender.views.ingredient.IngredientFragmentArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.*
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -21,18 +18,21 @@ class IngredientViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val fragmentArgs = IngredientFragmentArgs.fromSavedStateHandle(savedStateHandle)
+    val name: String = fragmentArgs.ingredientName
+    val imageUrl: String = Ingredient.imageUrl(fragmentArgs.ingredientName, ImageSize.MEDIUM)
 
-    private val name: String = fragmentArgs.ingredientName
-
-    // Use with databinding once stable
-    private val ingredientFlow: StateFlow<Resource<Ingredient>> = flow {
+    // https://medium.com/androiddevelopers/migrating-from-livedata-to-kotlins-flow-379292f419fb
+    // For Data Binding, you should use Flows everywhere and simply add asLiveData() to expose them
+    // to the view. Data Binding will be updated when lifecycle-runtime-ktx 2.4.0 goes stable.
+    val ingredientResource: LiveData<Resource<Ingredient>> = flow {
         Timber.d("ingredient flow ($name)")
+        emit(Resource.Loading)
         kotlin.runCatching {
             repository.getIngredientByName(name)
         }.mapCatching {
             when {
                 it.isNullOrEmpty() -> throw NoSuchElementException(
-                    "Ingredient with name $ingredientName not found on server"
+                    "Ingredient with name $name not found on server"
                 )
                 else -> it.first()
             }
@@ -41,31 +41,12 @@ class IngredientViewModel @Inject constructor(
         }.onFailure { e ->
             emit(Resource.Failure(e))
         }
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.Lazily,
-        initialValue = Resource.Loading
-    )
-
-    val ingredientResource: LiveData<Resource<Ingredient>> = ingredientFlow.asLiveData()
-
-    val ingredientName: LiveData<String> = liveData {
-        emit(fragmentArgs.ingredientName)
-    }
-
-    val imageUrl: LiveData<String?> = liveData {
-        emit(Ingredient.imageUrl(fragmentArgs.ingredientName, ImageSize.MEDIUM))
-    }
+    }.asLiveData()
 
     val description: LiveData<String> = ingredientResource.map {
-        val desc = it.dataOrNull?.description
-        when {
-            desc.isNullOrBlank() -> "No description provided for this ingredient."
-            else -> desc
-        }
-    }
-
-    val type: LiveData<String> = ingredientResource.map {
-        it.dataOrNull?.type.orEmpty()
+        it.dataOrNull()
+            ?.description
+            ?.ifBlank { "No description provided for this ingredient." }
+            .orEmpty()
     }
 }
