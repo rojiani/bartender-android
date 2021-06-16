@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
                 android:gravity="center_horizontal"
-                android:text="@{ingredientViewModel.ingredientName}"
+                android:text="@{ingredientViewModel.name}"
                 android:textAppearance="@style/TextAppearance.H1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

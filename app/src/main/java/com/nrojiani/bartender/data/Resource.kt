@@ -12,7 +12,11 @@ sealed class Resource<out T> {
         override fun toString(): String = "Resource.Loading"
     }
 
-    val dataOrNull: T? by lazy { (this as? Success<T>)?.data }
+    /**
+     * Return the data if the Resource's state is [Resource.Success], or null
+     * if [Resource.Loading] or [Resource.Failure].
+     */
+    fun dataOrNull(): T? = (this as? Success<T>)?.data
 
     val isLoading: Boolean
         get() = this is Loading

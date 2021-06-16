@@ -3,6 +3,9 @@
 package com.nrojiani.bartender.test.utils.mocks
 
 import com.nrojiani.bartender.data.domain.DrinkRef
+import com.nrojiani.bartender.data.domain.Ingredient
+import com.nrojiani.bartender.data.remote.dto.NetworkIngredientsContainer
+import com.nrojiani.bartender.data.remote.dto.toDomainModel
 import com.nrojiani.bartender.di.NetworkModule
 import com.squareup.moshi.JsonAdapter
 import timber.log.Timber
@@ -53,5 +56,14 @@ object DrinkRefs {
         id = "178336",
         imageUrl = "https://www.thecocktaildb.com/images/media/drink/07iep51598719977.jpg",
         drinkName = "Blueberry Mojito"
+    )
+}
+
+object Ingredients {
+    val SUGAR: Ingredient = requireNotNull(
+        fromMockJson<NetworkIngredientsContainer>(mocksRelativePath = "ingredients/sugar.json")
+            .ingredients
+            ?.firstOrNull()
+            ?.toDomainModel()
     )
 }
