@@ -34,7 +34,7 @@ buildscript {
 
         // Gradle Plugins
         // AGP 7.0.0 required for StateFlow databinding: https://developer.android.com/topic/libraries/data-binding/observability#stateflow
-        android_gradle_plugin_version = '7.0.0-beta03'
+        android_gradle_plugin_version = '7.0.2'
         dependency_analysis_version = '0.73.0'
         detekt_version = '1.17.1'
         githooks_version = '1.2.0'
