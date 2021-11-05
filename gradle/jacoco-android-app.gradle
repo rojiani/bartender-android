@@ -82,7 +82,7 @@ def debugTree = kotlinClasses
 
 // Merge src/test and src/androidTest (Instrumentation unit tests)
 // into a single coverage report.
-def mergedUnitTestExecutionData = fileTree(dir: project.buildDir, includes: [
+def mergedTestExecutionData = fileTree(dir: project.buildDir, includes: [
     'jacoco/testDebugUnitTest.exec',
     'outputs/code_coverage/debugAndroidTest/connected/*.ec'
 ])
@@ -95,9 +95,9 @@ task jacocoTestReport(type: JacocoReport, dependsOn: [
     description = "Generate Jacoco coverage reports for Debug build unit tests (Local & Instrumented)"
 
     reports {
-        xml.enabled true
+        xml.getRequired().set(true)
         html {
-            enabled true
+            getRequired().set(true)
             file("$buildDir/reports/coverage")
         }
     }
@@ -106,7 +106,7 @@ task jacocoTestReport(type: JacocoReport, dependsOn: [
     sourceDirectories.from = files([
         android.sourceSets.main.java.srcDirs
     ])
-    executionData.from = mergedUnitTestExecutionData
+    executionData.from = mergedTestExecutionData
 }
 
 tasks.create(name: "jacocoTestCoverageVerification", type: JacocoCoverageVerification, dependsOn: "jacocoTestReport") {
@@ -114,22 +114,23 @@ tasks.create(name: "jacocoTestCoverageVerification", type: JacocoCoverageVerific
     sourceDirectories.from = files([
         android.sourceSets.main.java.srcDirs
     ])
-    executionData.from = mergedUnitTestExecutionData
+    executionData.from = mergedTestExecutionData
 
     violationRules {
-        // No longer accurately collecting coverage data...
-        // possibly related to changes with Android Gradle Plugin >= 4.2.0 ?
-        enabled = false
+        // Disable for CI builds since instrumented tests with emulator
+        // not setup
+        enabled = !ci.isCi()
+
         rule {
             limit {
                 counter = 'LINE'
-                minimum = 0.87
+                minimum = 0.70
             }
             limit {
                 counter = 'BRANCH'
 
                 // TODO: increase to 65%
-                minimum = 0.55
+                minimum = 0.48
             }
         }
     }
