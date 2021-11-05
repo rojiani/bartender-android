@@ -42,7 +42,7 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
         freeCompilerArgs = [
-            '-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi,kotlin.time.ExperimentalTime'
+            '-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi,kotlin.time.ExperimentalTime'
         ]
     }
 
