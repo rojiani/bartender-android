@@ -30,7 +30,7 @@ buildscript {
         arch_testing_version = '2.1.0'
         mockk_version = '1.11.0'
         kotest_version = '4.6.0'
-        turbine_version = '0.5.2'
+        turbine_version = '0.7.0'
 
         // Gradle Plugins
         // AGP 7.0.0 required for StateFlow databinding: https://developer.android.com/topic/libraries/data-binding/observability#stateflow
