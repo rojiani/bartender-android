@@ -44,9 +44,8 @@ class IngredientViewModel @Inject constructor(
     }.asLiveData()
 
     val description: LiveData<String> = ingredientResource.map {
-        it.dataOrNull()
-            ?.description
-            ?.ifBlank { "No description provided for this ingredient." }
+        it.dataOrNull()?.description
             .orEmpty()
+            .ifBlank { "No description provided for this ingredient." }
     }
 }

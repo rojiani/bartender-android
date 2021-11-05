@@ -70,8 +70,8 @@ class DrinkViewModelTest {
         drinkViewModel = DrinkViewModel(savedStateHandle = SAVED_STATE_HANDLE, mockRepository)
 
         drinkViewModel.drinkResource.test {
-            expectItem().shouldBe(Resource.Loading)
-            expectItem().shouldBe(Resource.Success(DRINK_DATA))
+            awaitItem().shouldBe(Resource.Loading)
+            awaitItem().shouldBe(Resource.Success(DRINK_DATA))
 
             cancelAndConsumeRemainingEvents()
         }
@@ -89,8 +89,8 @@ class DrinkViewModelTest {
         drinkViewModel = DrinkViewModel(savedStateHandle = SAVED_STATE_HANDLE, mockRepository)
 
         drinkViewModel.drinkResource.test {
-            expectItem().shouldBe(Resource.Loading)
-            expectItem().shouldBe(Resource.Failure(networkError))
+            awaitItem().shouldBe(Resource.Loading)
+            awaitItem().shouldBe(Resource.Failure(networkError))
 
             cancelAndConsumeRemainingEvents()
         }
@@ -101,9 +101,9 @@ class DrinkViewModelTest {
         drinkViewModel = DrinkViewModel(savedStateHandle = SAVED_STATE_HANDLE, mockRepository)
 
         drinkViewModel.ingredientMeasures.test {
-            expectItem().shouldBeEmpty() // initial state: emptyList()
+            awaitItem().shouldBeEmpty() // initial state: emptyList()
 
-            expectItem().shouldBe(
+            awaitItem().shouldBe(
                 listOf(
                     IngredientMeasure("Gin", "2 oz"),
                     IngredientMeasure("Lemon juice", "1 oz"),

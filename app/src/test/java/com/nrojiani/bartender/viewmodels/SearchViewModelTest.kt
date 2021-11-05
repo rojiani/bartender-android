@@ -85,10 +85,10 @@ class SearchViewModelTest {
         val searchViewModel = SearchViewModel(mockRepository, mockNetworkStatusMonitor)
 
         searchViewModel.networkStatus.test {
-            expectItem().shouldBe(NetworkStatus.UNDETERMINED)
-            expectItem().shouldBe(NetworkStatus.CONNECTED)
-            expectItem().shouldBe(NetworkStatus.NOT_CONNECTED)
-            expectItem().shouldBe(NetworkStatus.CONNECTED)
+            awaitItem().shouldBe(NetworkStatus.UNDETERMINED)
+            awaitItem().shouldBe(NetworkStatus.CONNECTED)
+            awaitItem().shouldBe(NetworkStatus.NOT_CONNECTED)
+            awaitItem().shouldBe(NetworkStatus.CONNECTED)
             cancelAndConsumeRemainingEvents()
         }
     }
@@ -110,7 +110,7 @@ class SearchViewModelTest {
             val searchViewModel = SearchViewModel(mockRepository, mockNetworkStatusMonitor)
 
             searchViewModel.networkStatus.test {
-                expectItem().shouldBe(NetworkStatus.CONNECTED)
+                awaitItem().shouldBe(NetworkStatus.CONNECTED)
                 cancelAndConsumeRemainingEvents()
             }
         }
@@ -121,8 +121,8 @@ class SearchViewModelTest {
 
         searchViewModel.drinkNameSearchResource.test {
             searchViewModel.searchForDrinksByName()
-            expectItem().shouldBe(Resource.Loading)
-            val drinkSearchResource: Resource<List<Drink>> = expectItem()
+            awaitItem().shouldBe(Resource.Loading)
+            val drinkSearchResource: Resource<List<Drink>> = awaitItem()
             drinkSearchResource.apply {
                 shouldBe(Resource.Success(EMPTY_STRING_DRINKS_RESULTS))
                 dataOrNull()?.shouldHaveSize(6)
@@ -130,8 +130,8 @@ class SearchViewModelTest {
 
             // when search text changes, results updated
             searchViewModel.drinkQueryTextChanged("gin and tonic")
-            expectItem().shouldBe(Resource.Loading)
-            expectItem().shouldBe(Resource.Success(GIN_AND_TONIC_RESULTS))
+            awaitItem().shouldBe(Resource.Loading)
+            awaitItem().shouldBe(Resource.Success(GIN_AND_TONIC_RESULTS))
 
             cancelAndConsumeRemainingEvents()
         }
@@ -144,17 +144,17 @@ class SearchViewModelTest {
         searchViewModel.drinkNameSearchResource.test {
             // when search text changes, results updated
             searchViewModel.drinkQueryTextChanged("gin and tonic")
-            expectItem().shouldBe(Resource.Loading)
-            expectItem().shouldBe(Resource.Success(GIN_AND_TONIC_RESULTS))
+            awaitItem().shouldBe(Resource.Loading)
+            awaitItem().shouldBe(Resource.Success(GIN_AND_TONIC_RESULTS))
 
             searchViewModel.drinkQueryTextChanged("gin and toni")
-            expectItem().shouldBe(Resource.Loading)
-            expectItem().dataOrNull().shouldNotBeNull()
+            awaitItem().shouldBe(Resource.Loading)
+            awaitItem().dataOrNull().shouldNotBeNull()
 
             searchViewModel.drinkQueryTextChanged("gin and tonic")
             // no loading...
-            // expectItem().shouldBe(Resource.Loading)
-            expectItem().shouldBe(Resource.Success(GIN_AND_TONIC_RESULTS))
+            // awaitItem().shouldBe(Resource.Loading)
+            awaitItem().shouldBe(Resource.Success(GIN_AND_TONIC_RESULTS))
 
             // verify network not called twice (first result is cached)
             coVerify(exactly = 1) {
@@ -177,8 +177,8 @@ class SearchViewModelTest {
         searchViewModel.drinkNameSearchResource.test {
             // when search text changes, results updated
             searchViewModel.searchForDrinksByName()
-            expectItem().shouldBe(Resource.Loading)
-            expectItem().shouldBe(Resource.Failure(networkError))
+            awaitItem().shouldBe(Resource.Loading)
+            awaitItem().shouldBe(Resource.Failure(networkError))
             cancelAndConsumeRemainingEvents()
         }
     }
