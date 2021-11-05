@@ -28,7 +28,7 @@ buildscript {
         androidx_test_runner_version = '1.4.0'
         androidx_test_core_version = '1.4.0'
         arch_testing_version = '2.1.0'
-        mockk_version = '1.11.0'
+        mockk_version = '1.12.0'
         kotest_version = '4.6.0'
         turbine_version = '0.7.0'
 
