@@ -45,18 +45,14 @@ android {
             '-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi,kotlin.time.ExperimentalTime'
         ]
     }
-
-    // https://github.com/Kotlin/kotlinx.coroutines/issues/2023
     packagingOptions {
-        exclude 'META-INF/AL2.0'
-        exclude 'META-INF/LGPL2.1'
-        exclude 'META-INF/fragment-testing_release.kotlin_module'
-    }
-
-    lintOptions {
-        // Throws NullPointerException while linting...
-        // no DialogFragments are used in this project
-        disable 'DialogFragmentCallbacksDetector'
+        resources {
+            excludes += [
+                'META-INF/AL2.0',
+                'META-INF/LGPL2.1',
+                'META-INF/fragment-testing_release.kotlin_module'
+            ]
+        }
     }
 
     testOptions {
@@ -80,6 +76,10 @@ android {
                 resources.srcDirs += sharedTestResourcesDir
             }
         }
+    }
+    lint {
+        // https://github.com/Kotlin/kotlinx.coroutines/issues/2023
+        disable 'DialogFragmentCallbacksDetector'
     }
 }
 

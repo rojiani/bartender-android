@@ -11,8 +11,8 @@ buildscript {
         hilt_version = '2.40'
         lifecycle_version = '2.4.0'
         material_version = '1.4.0'
-        navigation_version = '2.4.0-beta02'
-        moshi_version = '1.12.0'
+        navigation_version = '2.4.1'
+        moshi_version = '1.13.0'
         recyclerview_version = '1.2.1'
         retrofit_version = '2.9.0'
         ok_http_version = '5.0.0-alpha.2'
@@ -34,7 +34,7 @@ buildscript {
 
         // Gradle Plugins
         // AGP 7.0.0 required for StateFlow databinding: https://developer.android.com/topic/libraries/data-binding/observability#stateflow
-        android_gradle_plugin_version = '7.0.3'
+        android_gradle_plugin_version = '7.1.2'
         ci_detect_plugin_version = '0.5.0'
         dependency_analysis_version = '0.78.0'
         detekt_version = '1.18.1'
