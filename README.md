@@ -7,9 +7,7 @@ An Android app for finding cocktail recipes.
 
 ## Built With
 
-*Work in progress* - app will use these when completed.
-
-* [Kotlin](https://kotlinlang.org/) 1.5.x
+* [Kotlin](https://kotlinlang.org/) 1.6.x
 * [Kotlin Coroutines](https://developer.android.com/kotlin/coroutines)
 * [Kotlin Flow](https://developer.android.com/kotlin/flow)
 * [Jetpack](https://developer.android.com/jetpack): Navigation, ViewModel, LiveData, Data Binding, Room
@@ -47,11 +45,6 @@ App Icon/NavHeader:
 <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
 
 
-### Development
+## Demo
 
-| What                  | Version                     | Notes                                                                                                                             |
-| --------------------- | --------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| Android Studio        | Arctic Fox 2020.3.1 Beta 3+ | Using this for the [Apple Silicon](https://androidstudio.googleblog.com/2021/04/android-studio-arctic-fox-canary-15.html) support |
-| Android Gradle Plugin | 7.0.0-beta03                | Recommended with ^ AS version; StateFlow databinding support                                                                      |
-| Gradle                | 7.0.2                       |                                                                                                                                   |
-| JDK                   | 11                          | Bundled with Android Studio version above                                                                                         | 
+<img src="docs/assets/bartender.gif" width="360" height="640"/>

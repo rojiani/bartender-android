@@ -10,7 +10,7 @@ import io.kotest.matchers.shouldBe
 import io.mockk.coEvery
 import io.mockk.mockk
 import io.mockk.unmockkAll
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import net.lachlanmckee.timberjunit.TimberTestRule
 import org.junit.After
 import org.junit.Before
@@ -37,7 +37,7 @@ class DrinksRemoteDataSourceTest {
     }
 
     @Test
-    fun throws_when_webService_throws() = runBlockingTest {
+    fun throws_when_webService_throws() = runTest {
         val exception = UnknownHostException("Unable to resolve host")
 
         coEvery {
@@ -52,7 +52,7 @@ class DrinksRemoteDataSourceTest {
     }
 
     @Test
-    fun maps_to_domain_model_when_successful() = runBlockingTest {
+    fun maps_to_domain_model_when_successful() = runTest {
         val networkDrinkResultsContainer = fromMockJson<NetworkDrinksContainer>(
             mocksRelativePath = "search/name/gin-and-tonic.json"
         )

@@ -7,7 +7,7 @@ import com.nrojiani.bartender.data.domain.Drink
 import com.nrojiani.bartender.data.remote.dto.NetworkDrinksContainer
 import com.nrojiani.bartender.data.remote.dto.toDomainModel
 import com.nrojiani.bartender.data.repository.IDrinksRepository
-import com.nrojiani.bartender.test.utils.MainCoroutineScopeRule
+import com.nrojiani.bartender.test.utils.MainCoroutineRule
 import com.nrojiani.bartender.test.utils.mocks.fromMockJson
 import com.nrojiani.bartender.utils.connectivity.NetworkStatus
 import com.nrojiani.bartender.utils.connectivity.NetworkStatusMonitor
@@ -16,9 +16,8 @@ import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import io.mockk.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.test.runTest
 import net.lachlanmckee.timberjunit.TimberTestRule
 import org.junit.After
 import org.junit.Before
@@ -32,7 +31,7 @@ class SearchViewModelTest {
 
     @ExperimentalCoroutinesApi
     @get:Rule
-    var mainCoroutineScopeRule = MainCoroutineScopeRule()
+    var mainCoroutineRule = MainCoroutineRule()
 
     @get:Rule
     var logAllAlwaysRule: TimberTestRule = TimberTestRule.logAllAlways()
@@ -72,30 +71,8 @@ class SearchViewModelTest {
     }
 
     @Test
-    fun network_status_stateflow() = mainCoroutineScopeRule.dispatcher.runBlockingTest {
-        every { mockNetworkStatusMonitor.networkEventsFlow } returns flow {
-            // Delay so that not emitted before VM creation/subscription
-            delay(999)
-            emit(NetworkStatus.UNDETERMINED)
-            emit(NetworkStatus.CONNECTED)
-            emit(NetworkStatus.NOT_CONNECTED)
-            emit(NetworkStatus.CONNECTED)
-        }
-
-        val searchViewModel = SearchViewModel(mockRepository, mockNetworkStatusMonitor)
-
-        searchViewModel.networkStatus.test {
-            awaitItem().shouldBe(NetworkStatus.UNDETERMINED)
-            awaitItem().shouldBe(NetworkStatus.CONNECTED)
-            awaitItem().shouldBe(NetworkStatus.NOT_CONNECTED)
-            awaitItem().shouldBe(NetworkStatus.CONNECTED)
-            cancelAndConsumeRemainingEvents()
-        }
-    }
-
-    @Test
     fun network_status_stateflow_gets_last_value_of_hot_flow() =
-        mainCoroutineScopeRule.dispatcher.runBlockingTest {
+        runTest {
             every { mockNetworkStatusMonitor.networkEventsFlow } returns flow {
                 emit(NetworkStatus.UNDETERMINED)
                 emit(NetworkStatus.CONNECTED)
@@ -116,7 +93,7 @@ class SearchViewModelTest {
         }
 
     @Test
-    fun search_by_name_results_flow() = mainCoroutineScopeRule.dispatcher.runBlockingTest {
+    fun search_by_name_results_flow() = runTest {
         val searchViewModel = SearchViewModel(mockRepository, mockNetworkStatusMonitor)
 
         searchViewModel.drinkNameSearchResource.test {
@@ -138,7 +115,7 @@ class SearchViewModelTest {
     }
 
     @Test
-    fun search_by_name_results_are_cached() = mainCoroutineScopeRule.dispatcher.runBlockingTest {
+    fun search_by_name_results_are_cached() = runTest {
         val searchViewModel = SearchViewModel(mockRepository, mockNetworkStatusMonitor)
 
         searchViewModel.drinkNameSearchResource.test {
@@ -166,7 +143,7 @@ class SearchViewModelTest {
     }
 
     @Test
-    fun search_by_name_results_failed() = mainCoroutineScopeRule.dispatcher.runBlockingTest {
+    fun search_by_name_results_failed() = runTest {
         val networkError = IOException("Failed to get data")
         coEvery {
             mockRepository.getDrinksByName("")

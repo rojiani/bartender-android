@@ -19,7 +19,7 @@
     <string name="favorites_title">Favorites</string>
     <string name="content_description_bartender_logo">Bartender logo</string>
     <string name="search_for_a_drink">Search for a Drink</string>
-    <string name="placeholder_search_fragment">Temporary UI for Search Fragment</string>
+    <string name="search_for_a_drink_title">Search for a Drink</string>
     <string name="placeholder_ingredient_name">Elderflower Cordial</string>
     <string name="placeholder_drink_name">Elderflower Caipirinha</string>
     <string name="placeholder_ingredient_description">Elderflower cordial is a soft drink made largely from a refined sugar and water solution and uses the flowers of the European elderberry. Historically the cordial has been popular in North Western Europe where it has a strong Victorian heritage.</string>

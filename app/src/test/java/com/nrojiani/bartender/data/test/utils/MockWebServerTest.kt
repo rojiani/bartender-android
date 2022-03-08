@@ -9,6 +9,7 @@ import org.junit.Before
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * Adapted from:
@@ -66,6 +67,6 @@ open class MockWebServerTest {
         readMockJson(filename = filename)
 
     companion object {
-        private val DEFAULT_REQUEST_TIMEOUT: Duration = Duration.seconds(5)
+        private val DEFAULT_REQUEST_TIMEOUT: Duration = 5.seconds
     }
 }

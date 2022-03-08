@@ -9,7 +9,7 @@ import com.nrojiani.bartender.data.domain.IngredientMeasure
 import com.nrojiani.bartender.data.remote.dto.NetworkDrinksContainer
 import com.nrojiani.bartender.data.remote.dto.toDomainModel
 import com.nrojiani.bartender.data.repository.IDrinksRepository
-import com.nrojiani.bartender.test.utils.MainCoroutineScopeRule
+import com.nrojiani.bartender.test.utils.MainCoroutineRule
 import com.nrojiani.bartender.test.utils.mocks.DrinkRefs
 import com.nrojiani.bartender.test.utils.mocks.fromMockJson
 import io.kotest.matchers.collections.shouldBeEmpty
@@ -19,7 +19,7 @@ import io.mockk.mockk
 import io.mockk.unmockkAll
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import net.lachlanmckee.timberjunit.TimberTestRule
 import org.junit.After
 import org.junit.Before
@@ -33,7 +33,7 @@ class DrinkViewModelTest {
 
     @ExperimentalCoroutinesApi
     @get:Rule
-    var mainCoroutineScopeRule = MainCoroutineScopeRule()
+    var mainCoroutineRule = MainCoroutineRule()
 
     @get:Rule
     var logAllAlwaysRule: TimberTestRule = TimberTestRule.logAllAlways()
@@ -59,14 +59,14 @@ class DrinkViewModelTest {
 
     @Test
     fun fragment_args_from_saved_state_handle() =
-        mainCoroutineScopeRule.dispatcher.runBlockingTest {
+        runTest {
             drinkViewModel = DrinkViewModel(savedStateHandle = SAVED_STATE_HANDLE, mockRepository)
 
             drinkViewModel.drinkRef.shouldBe(DRINK_REF)
         }
 
     @Test
-    fun drink_data_fetched_successfully() = mainCoroutineScopeRule.dispatcher.runBlockingTest {
+    fun drink_data_fetched_successfully() = runTest {
         drinkViewModel = DrinkViewModel(savedStateHandle = SAVED_STATE_HANDLE, mockRepository)
 
         drinkViewModel.drinkResource.test {
@@ -78,7 +78,7 @@ class DrinkViewModelTest {
     }
 
     @Test
-    fun drink_data_fetched_failed() = mainCoroutineScopeRule.dispatcher.runBlockingTest {
+    fun drink_data_fetched_failed() = runTest {
         val networkError = IOException("Failed to get data")
         coEvery {
             mockRepository.lookupDrinkDetails(DRINK_REF.id)
@@ -97,7 +97,7 @@ class DrinkViewModelTest {
     }
 
     @Test
-    fun ingredient_measures() = mainCoroutineScopeRule.dispatcher.runBlockingTest {
+    fun ingredient_measures() = runTest {
         drinkViewModel = DrinkViewModel(savedStateHandle = SAVED_STATE_HANDLE, mockRepository)
 
         drinkViewModel.ingredientMeasures.test {
