@@ -5,7 +5,7 @@ import androidx.lifecycle.SavedStateHandle
 import com.nrojiani.bartender.data.Resource
 import com.nrojiani.bartender.data.domain.Ingredient
 import com.nrojiani.bartender.data.repository.IDrinksRepository
-import com.nrojiani.bartender.test.utils.MainCoroutineScopeRule
+import com.nrojiani.bartender.test.utils.MainCoroutineRule
 import com.nrojiani.bartender.test.utils.livedata.getOrAwaitValue
 import com.nrojiani.bartender.test.utils.mocks.Ingredients
 import io.kotest.matchers.shouldBe
@@ -29,7 +29,7 @@ class IngredientViewModelTest {
 
     @ExperimentalCoroutinesApi
     @get:Rule
-    var mainCoroutineScopeRule = MainCoroutineScopeRule()
+    var mainCoroutineRule = MainCoroutineRule()
 
     @get:Rule
     var logAllAlwaysRule: TimberTestRule = TimberTestRule.logAllAlways()
