@@ -46,4 +46,5 @@ App Icon/NavHeader:
 
 
 ## Demo
-![](docs/assets/bartender.gif)
+
+<img src="docs/assets/bartender.gif" width="360" height="640"/>
