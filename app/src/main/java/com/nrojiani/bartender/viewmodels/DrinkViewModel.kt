@@ -1,6 +1,8 @@
 package com.nrojiani.bartender.viewmodels
 
-import androidx.lifecycle.*
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.nrojiani.bartender.data.Resource
 import com.nrojiani.bartender.data.domain.Drink
 import com.nrojiani.bartender.data.domain.DrinkRef
@@ -28,19 +30,13 @@ class DrinkViewModel @Inject constructor(
     val drinkResource: StateFlow<Resource<Drink>> = flow {
         Timber.d("drink flow (${drinkRef.id})")
 
-        // TODO coroutine handling
-        kotlin.runCatching {
-            repository.lookupDrinkDetails(drinkRef.id)
-        }.mapCatching {
-            when (it) {
+        val drinkDetailsResource = Resource.from {
+            when (val details = repository.lookupDrinkDetails(drinkRef.id)) {
                 null -> throw NoSuchElementException("Drink with id ${drinkRef.id} not found on server")
-                else -> it
+                else -> details
             }
-        }.onSuccess {
-            emit(Resource.Success(it))
-        }.onFailure { e ->
-            emit(Resource.Failure(e))
         }
+        emit(drinkDetailsResource)
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.Eagerly,

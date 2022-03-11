@@ -26,4 +26,14 @@ sealed class Resource<out T> {
 
     val isFailure: Boolean
         get() = this is Failure
+
+    companion object {
+        suspend fun <T> from(retrieveResource: suspend () -> T): Resource<T> =
+            kotlin.runCatching {
+                retrieveResource()
+            }.fold(
+                onSuccess = { Success(it) },
+                onFailure = { e -> Failure(e) }
+            )
+    }
 }
