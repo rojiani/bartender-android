@@ -59,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:padding="@dimen/double_margin"
-                android:text="@{ingredientViewModel.description}"
+                app:ingredientDescription="@{ingredientViewModel.ingredientResource}"
                 android:textAppearance="@style/TextAppearance.Body1"
                 app:isGoneWhileLoading="@{ingredientViewModel.ingredientResource}"
                 app:layout_constraintEnd_toEndOf="parent"

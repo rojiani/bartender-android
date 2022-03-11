@@ -1,6 +1,8 @@
 package com.nrojiani.bartender.viewmodels
 
-import androidx.lifecycle.*
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.nrojiani.bartender.data.Resource
 import com.nrojiani.bartender.data.domain.ImageSize
 import com.nrojiani.bartender.data.domain.Ingredient
@@ -8,6 +10,7 @@ import com.nrojiani.bartender.data.repository.IDrinksRepository
 import com.nrojiani.bartender.views.ingredient.IngredientFragmentArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -21,31 +24,23 @@ class IngredientViewModel @Inject constructor(
     val name: String = fragmentArgs.ingredientName
     val imageUrl: String = Ingredient.imageUrl(fragmentArgs.ingredientName, ImageSize.MEDIUM)
 
-    // https://medium.com/androiddevelopers/migrating-from-livedata-to-kotlins-flow-379292f419fb
-    // For Data Binding, you should use Flows everywhere and simply add asLiveData() to expose them
-    // to the view. Data Binding will be updated when lifecycle-runtime-ktx 2.4.0 goes stable.
-    val ingredientResource: LiveData<Resource<Ingredient>> = flow {
-        Timber.d("ingredient flow ($name)")
-        emit(Resource.Loading)
-        kotlin.runCatching {
-            repository.getIngredientByName(name)
-        }.mapCatching {
-            when {
-                it.isNullOrEmpty() -> throw NoSuchElementException(
-                    "Ingredient with name $name not found on server"
-                )
-                else -> it.first()
-            }
-        }.onSuccess {
-            emit(Resource.Success(it))
-        }.onFailure { e ->
-            emit(Resource.Failure(e))
-        }
-    }.asLiveData()
+    private val _ingredientResource = MutableStateFlow<Resource<Ingredient>>(Resource.Loading)
+    val ingredientResource: StateFlow<Resource<Ingredient>> = _ingredientResource.asStateFlow()
 
-    val description: LiveData<String> = ingredientResource.map {
-        it.dataOrNull()?.description
-            .orEmpty()
-            .ifBlank { "No description provided for this ingredient." }
+    fun loadIngredient() {
+        Timber.d("loading ingredient ($name)")
+        viewModelScope.launch {
+            val ingredient = kotlin.runCatching {
+                repository.getIngredientByName(name)
+            }.mapCatching {
+                it.firstOrNull()
+                    ?: throw NoSuchElementException("Ingredient with name $name not found on server")
+            }.fold(
+                onSuccess = { Resource.Success(it) },
+                onFailure = { e -> Resource.Failure(e) }
+            )
+
+            _ingredientResource.emit(ingredient)
+        }
     }
 }

@@ -31,6 +31,8 @@ class IngredientFragment : Fragment() {
         binding.ingredientViewModel = viewModel
         binding.setLifecycleOwner { this.lifecycle }
 
+        viewModel.loadIngredient()
+
         return binding.root
     }
 }

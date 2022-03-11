@@ -25,7 +25,7 @@ data class NetworkIngredient(
     val name: String,
 
     @Json(name = "strDescription")
-    val description: String,
+    val description: String?,
 
     @Json(name = "strABV")
     val abv: String?,
@@ -43,7 +43,7 @@ data class NetworkIngredient(
 fun NetworkIngredient.toDomainModel(): Ingredient = Ingredient(
     id = id,
     name = name,
-    description = description,
+    description = description.orEmpty(),
     abv = abv ?: "0",
     alcoholic = alcohol.equals("Yes", ignoreCase = true),
     type = type.orEmpty()

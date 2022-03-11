@@ -74,7 +74,7 @@ class IngredientFragmentTest {
             matches(
                 allOf(
                     isDisplayed(),
-                    withText(containsString("No description provided for this ingredient.")),
+                    withText(containsString("No description provided.")),
                 )
             )
         )

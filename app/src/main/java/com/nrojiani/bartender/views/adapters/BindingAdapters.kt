@@ -4,6 +4,7 @@ package com.nrojiani.bartender.views.adapters
 
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
@@ -14,6 +15,7 @@ import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.nrojiani.bartender.R
 import com.nrojiani.bartender.data.Resource
 import com.nrojiani.bartender.data.domain.Drink
+import com.nrojiani.bartender.data.domain.Ingredient
 import com.nrojiani.bartender.data.domain.IngredientMeasure
 import com.nrojiani.bartender.utils.connectivity.NetworkStatus
 import com.nrojiani.bartender.views.drink.ingredients.IngredientMeasureAdapter
@@ -72,6 +74,13 @@ fun bindIngredientsListData(recyclerView: RecyclerView, data: List<IngredientMea
 fun <T> bindDrinksByNameSearchData(recyclerView: RecyclerView, data: List<Drink>) {
     val adapter = recyclerView.adapter as DrinkAdapter
     adapter.submitList(data)
+}
+
+@BindingAdapter("ingredientDescription")
+fun bindIngredientDescription(textView: TextView, ingredientResource: Resource<Ingredient>) {
+    textView.text = ingredientResource.dataOrNull()
+        ?.description
+        ?.ifBlank { "No description provided." }
 }
 
 @BindingAdapter("visibleWhenOnline")
