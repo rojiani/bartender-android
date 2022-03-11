@@ -72,12 +72,12 @@ class SearchViewModel @Inject constructor(
         _drinkNameSearchResource.value = Resource.Loading
 
         viewModelScope.launch {
-            kotlin.runCatching {
+            val drinks = Resource.from {
                 repository.getDrinksByName(drinkName)
-            }.onFailure { e ->
-                Timber.e(e, "Error fetching drinks")
-                _drinkNameSearchResource.value = Resource.Failure(e)
-            }.onSuccess { matches ->
+            }
+            _drinkNameSearchResource.value = drinks
+            if (drinks is Resource.Success<List<Drink>>) {
+                val matches = drinks.data
                 Timber.d("Found ${matches.size} matches")
                 inMemoryDrinkNameSearchCache[drinkName] = matches
                 _drinkNameSearchResource.value = Resource.Success(matches)
@@ -89,13 +89,18 @@ class SearchViewModel @Inject constructor(
         viewModelScope.launch {
             Timber.d("getRandomDrink()")
 
-            kotlin.runCatching {
+            val randomDrinkResource = Resource.from {
                 repository.getRandomDrink()
-            }.onFailure { e ->
-                Timber.e(e, "Error fetching random drink")
-            }.onSuccess { randomDrink ->
-                Timber.d("Fetch random drink ${randomDrink.drinkName}")
-                displayDrinkDetails(randomDrink)
+            }
+            when (randomDrinkResource) {
+                is Resource.Failure -> Timber.e(
+                    randomDrinkResource.exception,
+                    "Error fetching random drink"
+                )
+                is Resource.Success<Drink> -> {
+                    Timber.d("Fetch random drink ${randomDrinkResource.data.drinkName}")
+                    displayDrinkDetails(randomDrinkResource.data)
+                }
             }
         }
     }

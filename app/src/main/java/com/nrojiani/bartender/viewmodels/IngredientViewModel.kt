@@ -30,16 +30,11 @@ class IngredientViewModel @Inject constructor(
     fun loadIngredient() {
         Timber.d("loading ingredient ($name)")
         viewModelScope.launch {
-            val ingredient = kotlin.runCatching {
+            val ingredient = Resource.from {
                 repository.getIngredientByName(name)
-            }.mapCatching {
-                it.firstOrNull()
+                    .firstOrNull()
                     ?: throw NoSuchElementException("Ingredient with name $name not found on server")
-            }.fold(
-                onSuccess = { Resource.Success(it) },
-                onFailure = { e -> Resource.Failure(e) }
-            )
-
+            }
             _ingredientResource.emit(ingredient)
         }
     }
