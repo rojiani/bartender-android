@@ -1,6 +1,6 @@
 @file:JvmName("DataMapping")
 
-package com.nrojiani.bartender.data.mapper
+package com.nrojiani.bartender.data.domain.mapper
 
 import com.nrojiani.bartender.data.domain.IbaCategory
 import com.nrojiani.bartender.data.domain.IngredientMeasure

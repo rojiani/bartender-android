@@ -1,4 +1,4 @@
-package com.nrojiani.bartender.viewmodels
+package com.nrojiani.bartender.viewmodels.search
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import app.cash.turbine.test

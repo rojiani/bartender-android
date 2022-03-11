@@ -16,11 +16,10 @@ import androidx.recyclerview.widget.ListAdapter
 import com.nrojiani.bartender.R
 import com.nrojiani.bartender.data.domain.Drink
 import com.nrojiani.bartender.databinding.SearchFragmentBinding
-import com.nrojiani.bartender.viewmodels.SearchViewModel
+import com.nrojiani.bartender.viewmodels.search.SearchViewModel
 import com.nrojiani.bartender.views.search.drinks.DrinkAdapter
 import com.nrojiani.bartender.views.search.drinks.DrinkClickListener
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import timber.log.Timber
 

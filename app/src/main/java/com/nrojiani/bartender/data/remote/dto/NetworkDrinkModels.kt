@@ -4,9 +4,9 @@ package com.nrojiani.bartender.data.remote.dto
 
 import com.nrojiani.bartender.data.domain.Drink
 import com.nrojiani.bartender.data.domain.DrinkRef
-import com.nrojiani.bartender.data.mapper.categorizeIba
-import com.nrojiani.bartender.data.mapper.ingredientMeasures
-import com.nrojiani.bartender.data.mapper.parseTags
+import com.nrojiani.bartender.data.domain.mapper.categorizeIba
+import com.nrojiani.bartender.data.domain.mapper.ingredientMeasures
+import com.nrojiani.bartender.data.domain.mapper.parseTags
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
