@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.nrojiani.bartender.R
 import com.nrojiani.bartender.databinding.IngredientFragmentBinding
-import com.nrojiani.bartender.viewmodels.IngredientViewModel
+import com.nrojiani.bartender.viewmodels.ingredient.IngredientViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

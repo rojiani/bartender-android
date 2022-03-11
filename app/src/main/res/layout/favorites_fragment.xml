@@ -7,7 +7,7 @@
 
         <variable
             name="favoritesViewModel"
-            type="com.nrojiani.bartender.viewmodels.FavoritesViewModel" />
+            type="com.nrojiani.bartender.viewmodels.favorites.FavoritesViewModel" />
     </data>
 
 

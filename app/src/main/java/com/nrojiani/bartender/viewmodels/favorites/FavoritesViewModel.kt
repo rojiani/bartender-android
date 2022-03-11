@@ -1,4 +1,4 @@
-package com.nrojiani.bartender.viewmodels
+package com.nrojiani.bartender.viewmodels.favorites
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel

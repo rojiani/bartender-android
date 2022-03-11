@@ -1,4 +1,4 @@
-package com.nrojiani.bartender.viewmodels
+package com.nrojiani.bartender.viewmodels.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

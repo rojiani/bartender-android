@@ -1,4 +1,4 @@
-package com.nrojiani.bartender.viewmodels
+package com.nrojiani.bartender.viewmodels.ingredient
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel

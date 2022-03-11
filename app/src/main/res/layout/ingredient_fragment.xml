@@ -8,7 +8,7 @@
 
         <variable
             name="ingredientViewModel"
-            type="com.nrojiani.bartender.viewmodels.IngredientViewModel" />
+            type="com.nrojiani.bartender.viewmodels.ingredient.IngredientViewModel" />
     </data>
 
     <ScrollView

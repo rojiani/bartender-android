@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.ListAdapter
 import com.nrojiani.bartender.R
 import com.nrojiani.bartender.data.domain.IngredientMeasure
 import com.nrojiani.bartender.databinding.DrinkFragmentBinding
-import com.nrojiani.bartender.viewmodels.DrinkViewModel
+import com.nrojiani.bartender.viewmodels.drink.DrinkViewModel
 import com.nrojiani.bartender.views.drink.ingredients.IngredientMeasureAdapter
 import com.nrojiani.bartender.views.drink.ingredients.IngredientMeasureClickListener
 import dagger.hilt.android.AndroidEntryPoint

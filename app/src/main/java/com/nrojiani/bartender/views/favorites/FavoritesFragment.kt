@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.nrojiani.bartender.R
 import com.nrojiani.bartender.databinding.FavoritesFragmentBinding
-import com.nrojiani.bartender.viewmodels.FavoritesViewModel
+import com.nrojiani.bartender.viewmodels.favorites.FavoritesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
