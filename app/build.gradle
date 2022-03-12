@@ -154,7 +154,7 @@ dependencies {
     kaptAndroidTest "com.google.dagger:hilt-android-compiler:$hilt_version"
 }
 
-apply from: "${gradleScriptsDir}/jacoco-android-app.gradle"
+//apply from: "${gradleScriptsDir}/jacoco-android-app.gradle"
 
 afterEvaluate {
     tasks.withType(Test) {
