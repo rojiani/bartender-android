@@ -36,7 +36,7 @@ buildscript {
         // AGP 7.0.0 required for StateFlow databinding: https://developer.android.com/topic/libraries/data-binding/observability#stateflow
         android_gradle_plugin_version = '7.1.2'
         ci_detect_plugin_version = '0.5.0'
-        dependency_analysis_version = '0.78.0'
+        dependency_analysis_version = '1.0.0-rc03'
         detekt_version = '1.18.1'
         githooks_version = '1.2.0'
         spotless_version = '5.17.1'
@@ -82,14 +82,15 @@ allprojects {
 }
 
 ext {
-    gradleScriptsDir = "${rootDir}/gradle"
+    gradleScriptsDir = layout.projectDirectory.dir('gradle')
 }
 
 // Gradle Plugins
-apply from: "gradle/detekt.gradle"
-apply from: "gradle/spotless.gradle"
-apply from: "gradle/commit-msg-template.gradle"
-apply from: "gradle/githooks.gradle"
+apply from: "$gradleScriptsDir/detekt.gradle"
+apply from: "$gradleScriptsDir/spotless.gradle"
+apply from: "$gradleScriptsDir/commit-msg-template.gradle"
+apply from: "$gradleScriptsDir/githooks.gradle"
 
-apply plugin: "com.autonomousapps.dependency-analysis"
+apply from: "$gradleScriptsDir/dependency-analysis.gradle"
+
 apply plugin: "be.vbgn.ci-detect"

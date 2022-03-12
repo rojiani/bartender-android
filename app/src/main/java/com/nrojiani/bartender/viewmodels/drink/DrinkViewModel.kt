@@ -8,7 +8,7 @@ import com.nrojiani.bartender.data.domain.Drink
 import com.nrojiani.bartender.data.domain.DrinkRef
 import com.nrojiani.bartender.data.domain.IngredientMeasure
 import com.nrojiani.bartender.data.repository.IDrinksRepository
-import com.nrojiani.bartender.utils.flow.FLOW_STOP_TIMEOUT_MS
+import com.nrojiani.bartender.utils.flow.WhileViewSubscribed
 import com.nrojiani.bartender.views.drink.DrinkFragmentArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -39,7 +39,7 @@ class DrinkViewModel @Inject constructor(
         emit(drinkDetailsResource)
     }.stateIn(
         scope = viewModelScope,
-        started = SharingStarted.Eagerly,
+        started = WhileViewSubscribed,
         initialValue = Resource.Loading
     )
 
@@ -47,7 +47,7 @@ class DrinkViewModel @Inject constructor(
         it.dataOrNull()?.ingredientMeasures
     }.stateIn(
         scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(FLOW_STOP_TIMEOUT_MS),
+        started = WhileViewSubscribed,
         initialValue = emptyList()
     )
 
@@ -55,7 +55,7 @@ class DrinkViewModel @Inject constructor(
         it.dataOrNull()?.glass
     }.stateIn(
         scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(FLOW_STOP_TIMEOUT_MS),
+        started = WhileViewSubscribed,
         initialValue = ""
     )
 
@@ -63,7 +63,7 @@ class DrinkViewModel @Inject constructor(
         it.dataOrNull()?.instructions
     }.stateIn(
         scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(FLOW_STOP_TIMEOUT_MS),
+        started = WhileViewSubscribed,
         initialValue = ""
     )
 

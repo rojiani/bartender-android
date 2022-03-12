@@ -8,11 +8,10 @@ import com.nrojiani.bartender.data.domain.DrinkRef
 import com.nrojiani.bartender.data.repository.IDrinksRepository
 import com.nrojiani.bartender.utils.connectivity.NetworkStatus
 import com.nrojiani.bartender.utils.connectivity.NetworkStatusMonitor
-import com.nrojiani.bartender.utils.flow.FLOW_STOP_TIMEOUT_MS
+import com.nrojiani.bartender.utils.flow.WhileViewSubscribed
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -38,7 +37,7 @@ class SearchViewModel @Inject constructor(
         it.dataOrNull() ?: emptyList()
     }.stateIn(
         scope = viewModelScope,
-        started = WhileSubscribed(FLOW_STOP_TIMEOUT_MS),
+        started = WhileViewSubscribed,
         initialValue = emptyList()
     )
 
@@ -51,7 +50,7 @@ class SearchViewModel @Inject constructor(
                 }
             }.stateIn(
                 scope = viewModelScope,
-                started = WhileSubscribed(FLOW_STOP_TIMEOUT_MS),
+                started = WhileViewSubscribed,
                 initialValue = NetworkStatus.UNDETERMINED
             )
 
