@@ -125,12 +125,11 @@ class SearchViewModel @Inject constructor(
      */
     val eventsFlow: Flow<Event> = eventChannel.receiveAsFlow()
 
-    fun displayDrinkDetails(drinkRef: DrinkRef) {
+    fun displayDrinkDetails(drink: Drink) {
+        val drinkRef = drink.toDrinkRef()
         viewModelScope.launch {
             Timber.d("sending NavigateToDrinkDetail($drinkRef) event")
             eventChannel.send(Event.NavigateToDrinkDetail(drinkRef))
         }
     }
-
-    fun displayDrinkDetails(drink: Drink) = displayDrinkDetails(drink.toDrinkRef())
 }

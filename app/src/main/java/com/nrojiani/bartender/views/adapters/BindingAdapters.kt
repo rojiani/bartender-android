@@ -76,6 +76,11 @@ fun <T> bindDrinksByNameSearchData(recyclerView: RecyclerView, data: List<Drink>
     adapter.submitList(data)
 }
 
+@BindingAdapter("oDrinksFoundMessageVisibility")
+fun <T> bindNoDrinksFoundMessageVisibility(textView: TextView, drinkResults: Resource<List<Drink>>) {
+    textView.isVisible = drinkResults is Resource.Success && drinkResults.data.isEmpty()
+}
+
 @BindingAdapter("ingredientDescription")
 fun bindIngredientDescription(textView: TextView, ingredientResource: Resource<Ingredient>) {
     textView.text = ingredientResource.dataOrNull()
