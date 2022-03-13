@@ -30,4 +30,5 @@
     <string name="dismiss">Dismiss</string>
     <string name="content_description_offline_indicator">Offline Indicator</string>
     <string name="no_connection_error_message">Your network is unavailable. Check your data or wifi connection.</string>
+    <string name="no_drinks_found">No drinks found.</string>
 </resources>
