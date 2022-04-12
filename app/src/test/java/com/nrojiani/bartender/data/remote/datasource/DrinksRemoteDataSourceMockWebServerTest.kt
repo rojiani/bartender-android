@@ -19,9 +19,6 @@ import retrofit2.Retrofit
 /**
  * Test TheCocktailDB Retrofit Service using a Mock Web Server that returns
  * JSON responses read from file.
- *
- * Adapted from:
- * [GitHub: Karumi/KataTODOApiClientKotlin - MockWebServerTest.kt](https://github.com/Karumi/KataTODOApiClientKotlin/blob/master/src/test/kotlin/com/karumi/todoapiclient/MockWebServerTest.kt)
  */
 class DrinksRemoteDataSourceMockWebServerTest : MockWebServerTest() {
 

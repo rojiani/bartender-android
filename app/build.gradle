@@ -42,7 +42,7 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
         freeCompilerArgs = [
-            '-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi,kotlin.time.ExperimentalTime'
+            '-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi,kotlin.time.ExperimentalTime'
         ]
     }
     packagingOptions {
@@ -167,3 +167,5 @@ afterEvaluate {
         ]
     }
 }
+
+apply from: "$gradleScriptsDir/detekt.gradle"

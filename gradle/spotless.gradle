@@ -19,9 +19,6 @@ spotless {
 
         ktlint(rootProject.ktlint_version)
                 .userData([
-                    'max_line_length'     : '150',
-                    'indent_style'        : 'space',
-                    'insert_final_newline': 'true',
                     'experimental:indent' : 'false',
                     'disabled_rules'      : 'no-multi-spaces, no-wildcard-imports'
                 ])

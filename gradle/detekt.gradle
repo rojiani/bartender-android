@@ -9,31 +9,11 @@ apply plugin: 'io.gitlab.arturbosch.detekt'
 detekt {
     autoCorrect = false
     parallel = true
-    failFast = false
-    input = files(
-            "$projectDir/app/src/main/java",
-            "$projectDir/app/src/main/kotlin"
-            )
     buildUponDefaultConfig = true // preconfigure defaults
-    config = files("${projectDir}/config/detekt/detekt.yml")
+    config = files("${rootProject.rootDir}/config/detekt/detekt.yml")
     debug = false
     ignoreFailures = false
-    baseline = file("${projectDir}/config/detekt/baseline.xml")
-
-    reports {
-        xml {
-            enabled = true
-            destination = file("${buildDir}/reports/detekt/detekt.xml")
-        }
-        html {
-            enabled = true
-            destination = file("${buildDir}/reports/detekt/detekt.html")
-        }
-        txt {
-            enabled = true
-            destination = file("${buildDir}/reports/detekt/detekt.txt")
-        }
-    }
+    baseline = file("${rootProject.rootDir}/config/detekt/baseline.xml")
 }
 
 task openDetektReport(type: Exec) {
@@ -41,15 +21,14 @@ task openDetektReport(type: Exec) {
     description = "Open the detekt report in the default browser"
 
     doFirst {
-        assert file("${rootProject.buildDir}/reports/detekt/detekt.html").exists()
+        assert file("${buildDir}/reports/detekt/detekt.html").exists()
     }
 
-    def reportFile = "${rootProject.buildDir}/reports/detekt/detekt.html"
+    def reportFile = "${buildDir}/reports/detekt/detekt.html"
 
     if (Os.isFamily(Os.FAMILY_MAC)) {
         commandLine "open", "${buildDir}/reports/detekt/detekt.html"
     } else {
         commandLine "echo", "Only MacOs supported, open ${reportFile} in your browser..."
     }
-
 }

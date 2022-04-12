@@ -4,7 +4,7 @@ apply plugin: "com.autonomousapps.dependency-analysis"
 
 task openBuildHealthReport(type: Exec) {
     group = "Reporting"
-    description = "Open the detekt report in the default browser"
+    description = "Open the build health report in the default browser"
 
     def buildHealthReport = "${rootProject.buildDir}/reports/dependency-analysis/build-health-report.txt"
     doFirst {
