@@ -23,7 +23,7 @@ import org.junit.rules.TestWatcher
 import org.junit.runner.Description
 
 /**
- * [Source](https://github.com/android/architecture-samples/blob/coroutines-1.6/app/src/sharedTest/java/com/example/android/architecture/blueprints/todoapp/MainCoroutineRule.kt)
+ * [Source](https://github.com/android/architecture-samples/blob/main/app/src/sharedTest/java/com/example/android/architecture/blueprints/todoapp/MainCoroutineRule.kt)
  *
  * Sets the main coroutines dispatcher to a [TestDispatcher] for unit testing.
  *
@@ -34,7 +34,7 @@ import org.junit.runner.Description
  * var mainCoroutineRule = MainCoroutineRule()
  * ```
  *
- * Then, use `runTest` to execute your tests.
+ * Then, use [runTest] to execute your tests.
  */
 @ExperimentalCoroutinesApi
 class MainCoroutineRule(
